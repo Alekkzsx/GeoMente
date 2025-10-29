@@ -1,0 +1,11 @@
+C:\Users\TEMP\Documents\GeoMente\GeoMente\bin\Debug\GeoMente.exe.config
+C:\Users\TEMP\Documents\GeoMente\GeoMente\bin\Debug\GeoMente.exe
+C:\Users\TEMP\Documents\GeoMente\GeoMente\bin\Debug\GeoMente.pdb
+C:\Users\TEMP\Documents\GeoMente\GeoMente\obj\Debug\GeoMente.csproj.AssemblyReference.cache
+C:\Users\TEMP\Documents\GeoMente\GeoMente\obj\Debug\GeoMente.Form1.resources
+C:\Users\TEMP\Documents\GeoMente\GeoMente\obj\Debug\GeoMente.Properties.Resources.resources
+C:\Users\TEMP\Documents\GeoMente\GeoMente\obj\Debug\GeoMente.csproj.GenerateResource.cache
+C:\Users\TEMP\Documents\GeoMente\GeoMente\obj\Debug\GeoMente.csproj.CoreCompileInputs.cache
+C:\Users\TEMP\Documents\GeoMente\GeoMente\obj\Debug\GeoMente.exe
+C:\Users\TEMP\Documents\GeoMente\GeoMente\obj\Debug\GeoMente.pdb
+C:\Users\TEMP\Documents\GeoMente\GeoMente\obj\Debug\GeoMente.FormEntrada.resources

@@ -1,0 +1,3 @@
+O GeoMente é um palavra secreta que deve funcionar de maneira educativa
+uma vez que o usuario verá uma bandeira de um país especifico, e terá de
+acertar conforme as suas tentativas
