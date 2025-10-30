@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -48,6 +43,9 @@ namespace GeoMente
             btnNovoJogo.Click += new EventHandler(btnNovoJogo_Click);
             btnAdivinhar.Click += new EventHandler(btnAdivinhar_Click);
             timerJogo.Tick += new EventHandler(timerJogo_Tick);
+
+            // Inicia o jogo assim que o formulário é carregado
+            IniciarNovoJogo();
         }
 
         private void CarregarPaises()
@@ -77,7 +75,7 @@ namespace GeoMente
             }
         }
 
-        private void btnNovoJogo_Click(object sender, EventArgs e)
+        private void IniciarNovoJogo()
         {
             if (todosOsPaises.Count == 0)
             {
@@ -89,15 +87,58 @@ namespace GeoMente
             paisAtual = todosOsPaises[rand.Next(todosOsPaises.Count)];
             paisAtualNomeSemAcentos = RemoverAcentos(paisAtual.Nome);
 
+            // Libera a imagem anterior, se existir
+            if (pictureBoxBandeira.Image != null)
+            {
+                pictureBoxBandeira.Image.Dispose();
+            }
+
             // Carrega a imagem da bandeira
             string imagePath = Path.Combine(exeDir, paisAtual.CaminhoImagem);
             if (File.Exists(imagePath))
             {
-                pictureBoxBandeira.Image = Image.FromFile(imagePath);
+                try
+                {
+                    // Load the image using Image.FromFile
+                    Image loadedImage = Image.FromFile(imagePath);
+
+                    // Create a new Bitmap from the loaded image to ensure proper disposal
+                    // and avoid potential issues with Image.FromFile's internal locking.
+                    pictureBoxBandeira.Image = new Bitmap(loadedImage);
+
+                    // Dispose the original loaded image
+                    loadedImage.Dispose();
+                }
+                catch (ArgumentException ex)
+                {
+                    // Handle the case where the file is not a valid image or is corrupted
+                    Console.WriteLine($"Erro ao carregar imagem: {ex.Message}");
+                    // Display placeholder
+                    Bitmap bmp = new Bitmap(pictureBoxBandeira.Width, pictureBoxBandeira.Height);
+                    using (Graphics g = Graphics.FromImage(bmp))
+                    {
+                        g.Clear(Color.LightGray);
+                        g.DrawString("Erro ao carregar imagem", this.Font, Brushes.Black, 10, 10);
+                    }
+                    pictureBoxBandeira.Image = bmp;
+                }
+                catch (OutOfMemoryException ex)
+                {
+                    // Handle potential OutOfMemoryException again, though less likely with this approach
+                    Console.WriteLine($"Erro de memória ao carregar imagem: {ex.Message}");
+                    // Display placeholder
+                    Bitmap bmp = new Bitmap(pictureBoxBandeira.Width, pictureBoxBandeira.Height);
+                    using (Graphics g = Graphics.FromImage(bmp))
+                    {
+                        g.Clear(Color.LightGray);
+                        g.DrawString("Erro de memória", this.Font, Brushes.Black, 10, 10);
+                    }
+                    pictureBoxBandeira.Image = bmp;
+                }
             }
             else
             {
-                // Se a imagem não existir, exibe um placeholder
+                // If the image file doesn't exist, display a placeholder
                 Bitmap bmp = new Bitmap(pictureBoxBandeira.Width, pictureBoxBandeira.Height);
                 using (Graphics g = Graphics.FromImage(bmp))
                 {
@@ -162,6 +203,11 @@ namespace GeoMente
             lblMensagemFinal.Visible = false;
         }
 
+        private void btnNovoJogo_Click(object sender, EventArgs e)
+        {
+            IniciarNovoJogo();
+        }
+
         private void AtualizarPalavraExibida()
         {
             lblPalavraSecreta.Text = string.Join(" ", palavraExibida);
@@ -177,9 +223,9 @@ namespace GeoMente
 
         private void btnAdivinhar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtLetra.Text))
+            if (palavraExibida == null || string.IsNullOrEmpty(txtLetra.Text))
             {
-                MessageBox.Show("Por favor, digite uma letra.");
+                MessageBox.Show("Por favor, inicie um novo jogo e digite uma letra.");
                 return;
             }
 
@@ -192,7 +238,15 @@ namespace GeoMente
                 return;
             }
 
-            if (letrasErradas.Contains(letra) || RemoverAcentos(new string(palavraExibida)).Contains(letra.ToString()))
+            // Verificação segura de letras já tentadas
+            if (letrasErradas != null && letrasErradas.Contains(letra))
+            {
+                MessageBox.Show("Você já tentou esta letra.");
+                txtLetra.Clear();
+                return;
+            }
+
+            if (palavraExibida != null && palavraExibida.Contains(letra))
             {
                 MessageBox.Show("Você já tentou esta letra.");
                 txtLetra.Clear();
