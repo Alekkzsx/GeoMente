@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\GeoMente"
   ],
-  "SelectedNode": "\\GeoMente.sln",
+  "SelectedNode": "\\GeoMente\\Form1.cs",
   "PreviewInSolutionExplorer": false
 }

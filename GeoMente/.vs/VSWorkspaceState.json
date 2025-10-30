@@ -1,11 +1,7 @@
 {
   "ExpandedNodes": [
     "",
-    "\\bin",
-    "\\bin\\Debug",
-    "\\bin\\Debug\\bin",
-    "\\bin\\Debug\\bin\\Debug"
+    "\\bin"
   ],
-  "SelectedNode": "\\GeoMente.csproj",
-  "PreviewInSolutionExplorer": false
+  "PreviewInSolutionExplorer": true
 }
