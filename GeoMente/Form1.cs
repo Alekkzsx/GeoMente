@@ -3,8 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,6 +20,9 @@ namespace GeoMente
 {
     public partial class Form1 : Form
     {
+        private readonly string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        private Random rand = new Random();
+        private string paisAtualNomeSemAcentos;
         // Estrutura para armazenar os dados de cada país
         private struct Pais
         {
@@ -42,7 +52,7 @@ namespace GeoMente
 
         private void CarregarPaises()
         {
-            string caminhoArquivo = "paises.txt";
+            string caminhoArquivo = Path.Combine(exeDir, "paises.txt");
             if (File.Exists(caminhoArquivo))
             {
                 string[] linhas = File.ReadAllLines(caminhoArquivo);
@@ -76,13 +86,14 @@ namespace GeoMente
             }
 
             // Seleciona um país aleatoriamente
-            Random rand = new Random();
             paisAtual = todosOsPaises[rand.Next(todosOsPaises.Count)];
+            paisAtualNomeSemAcentos = RemoverAcentos(paisAtual.Nome);
 
             // Carrega a imagem da bandeira
-            if (File.Exists(paisAtual.CaminhoImagem))
+            string imagePath = Path.Combine(exeDir, paisAtual.CaminhoImagem);
+            if (File.Exists(imagePath))
             {
-                pictureBoxBandeira.Image = Image.FromFile(paisAtual.CaminhoImagem);
+                pictureBoxBandeira.Image = Image.FromFile(imagePath);
             }
             else
             {
@@ -146,6 +157,9 @@ namespace GeoMente
             txtLetra.Enabled = true;
             btnAdivinhar.Enabled = true;
             timerJogo.Start();
+
+            // Limpa a mensagem de fim de jogo
+            lblMensagemFinal.Visible = false;
         }
 
         private void AtualizarPalavraExibida()
@@ -178,7 +192,7 @@ namespace GeoMente
                 return;
             }
 
-            if (palavraExibida.Contains(letra) || letrasErradas.Contains(letra))
+            if (letrasErradas.Contains(letra) || RemoverAcentos(new string(palavraExibida)).Contains(letra.ToString()))
             {
                 MessageBox.Show("Você já tentou esta letra.");
                 txtLetra.Clear();
@@ -186,18 +200,18 @@ namespace GeoMente
             }
 
             bool acertou = false;
-            for (int i = 0; i < paisAtual.Nome.Length; i++)
+            for (int i = 0; i < paisAtualNomeSemAcentos.Length; i++)
             {
-                if (paisAtual.Nome[i] == letra)
+                if (paisAtualNomeSemAcentos[i] == letra)
                 {
-                    palavraExibida[i] = letra;
+                    palavraExibida[i] = paisAtual.Nome[i];
                     acertou = true;
-                    pontuacao += 10; // Ganha 10 pontos por acerto
                 }
             }
 
             if (acertou)
             {
+                pontuacao += 10; // Ganha 10 pontos por acerto
                 AtualizarPalavraExibida();
                 // Verificar condição de vitória
                 if (!palavraExibida.Contains('_'))
@@ -209,7 +223,7 @@ namespace GeoMente
             {
                 letrasErradas.Add(letra);
                 tentativasRestantes--;
-                pontuacao -= 5; // Perde 5 pontos por erro
+                pontuacao = Math.Max(0, pontuacao - 5); // Perde 5 pontos por erro, sem negativar
                 // Verificar condição de derrota
                 if (tentativasRestantes <= 0)
                 {
@@ -232,12 +246,15 @@ namespace GeoMente
             {
                 pontuacao += tempoRestante * 2; // Bônus por tempo restante
                 AtualizarInterface();
-                MessageBox.Show("Parabéns! Você acertou a palavra!\nPontuação final: " + pontuacao);
+                lblMensagemFinal.Text = "Parabéns! Você acertou a palavra! Pontuação final: " + pontuacao;
+                lblMensagemFinal.ForeColor = Color.Green;
             }
             else
             {
-                MessageBox.Show("Fim de jogo! A palavra era: " + paisAtual.Nome);
+                lblMensagemFinal.Text = "Fim de jogo! A palavra era: " + paisAtual.Nome;
+                lblMensagemFinal.ForeColor = Color.Red;
             }
+            lblMensagemFinal.Visible = true;
         }
 
         private void timerJogo_Tick(object sender, EventArgs e)
@@ -256,6 +273,23 @@ namespace GeoMente
         private void pictureBoxBandeira_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private static string RemoverAcentos(string text)
+        {
+            var normalizedString = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder();
+
+            foreach (var c in normalizedString)
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
     }
 }

@@ -25,7 +25,6 @@ namespace GeoMente
             // 
             // pictureBoxLogo
             // 
-            this.pictureBoxLogo.ImageLocation = "GeoMente-logo.png";
             this.pictureBoxLogo.Location = new System.Drawing.Point(12, 12);
             this.pictureBoxLogo.Name = "pictureBoxLogo";
             this.pictureBoxLogo.Size = new System.Drawing.Size(460, 200);

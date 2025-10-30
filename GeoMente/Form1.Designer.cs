@@ -44,11 +44,13 @@
             // 
             // pictureBoxBandeira
             // 
-            this.pictureBoxBandeira.Location = new System.Drawing.Point(379, 41);
-            this.pictureBoxBandeira.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBoxBandeira.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxBandeira.Location = new System.Drawing.Point(16, 15);
+            this.pictureBoxBandeira.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBoxBandeira.Name = "pictureBoxBandeira";
-            this.pictureBoxBandeira.Size = new System.Drawing.Size(600, 277);
-            this.pictureBoxBandeira.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxBandeira.Size = new System.Drawing.Size(1324, 303);
+            this.pictureBoxBandeira.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxBandeira.TabIndex = 0;
             this.pictureBoxBandeira.TabStop = false;
             this.pictureBoxBandeira.Click += new System.EventHandler(this.pictureBoxBandeira_Click);
@@ -145,11 +147,23 @@
             this.lblLetrasErradas.TabIndex = 8;
             this.lblLetrasErradas.Text = "Letras erradas:";
             // 
+            // lblMensagemFinal
+            // 
+            this.lblMensagemFinal = new System.Windows.Forms.Label();
+            this.lblMensagemFinal.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMensagemFinal.Location = new System.Drawing.Point(16, 490);
+            this.lblMensagemFinal.Name = "lblMensagemFinal";
+            this.lblMensagemFinal.Size = new System.Drawing.Size(1324, 50);
+            this.lblMensagemFinal.TabIndex = 9;
+            this.lblMensagemFinal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblMensagemFinal.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1356, 722);
+            this.Controls.Add(this.lblMensagemFinal);
             this.Controls.Add(this.lblLetrasErradas);
             this.Controls.Add(this.btnNovoJogo);
             this.Controls.Add(this.lblPontuacao);
@@ -180,5 +194,6 @@
         private System.Windows.Forms.Button btnNovoJogo;
         private System.Windows.Forms.Timer timerJogo;
         private System.Windows.Forms.Label lblLetrasErradas;
+        private System.Windows.Forms.Label lblMensagemFinal;
     }
 }
