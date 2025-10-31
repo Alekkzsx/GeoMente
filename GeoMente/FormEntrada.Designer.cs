@@ -25,7 +25,7 @@ namespace GeoMente
             // 
             // pictureBoxLogo
             // 
-            this.pictureBoxLogo.Location = new System.Drawing.Point(12, 12);
+            this.pictureBoxLogo.Location = new System.Drawing.Point(448, 150);
             this.pictureBoxLogo.Name = "pictureBoxLogo";
             this.pictureBoxLogo.Size = new System.Drawing.Size(460, 200);
             this.pictureBoxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -35,7 +35,7 @@ namespace GeoMente
             // btnJogar
             // 
             this.btnJogar.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnJogar.Location = new System.Drawing.Point(140, 230);
+            this.btnJogar.Location = new System.Drawing.Point(578, 400);
             this.btnJogar.Name = "btnJogar";
             this.btnJogar.Size = new System.Drawing.Size(200, 60);
             this.btnJogar.TabIndex = 1;
@@ -45,7 +45,7 @@ namespace GeoMente
             // btnSair
             // 
             this.btnSair.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSair.Location = new System.Drawing.Point(190, 300);
+            this.btnSair.Location = new System.Drawing.Point(628, 480);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(100, 40);
             this.btnSair.TabIndex = 2;
@@ -56,7 +56,7 @@ namespace GeoMente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 361);
+            this.ClientSize = new System.Drawing.Size(1356, 722);
             this.Controls.Add(this.btnSair);
             this.Controls.Add(this.btnJogar);
             this.Controls.Add(this.pictureBoxLogo);

@@ -158,11 +158,24 @@
             this.lblMensagemFinal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblMensagemFinal.Visible = false;
             // 
+            // btnJogarNovamente
+            // 
+            this.btnJogarNovamente = new System.Windows.Forms.Button();
+            this.btnJogarNovamente.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnJogarNovamente.Location = new System.Drawing.Point(575, 550);
+            this.btnJogarNovamente.Name = "btnJogarNovamente";
+            this.btnJogarNovamente.Size = new System.Drawing.Size(200, 60);
+            this.btnJogarNovamente.TabIndex = 10;
+            this.btnJogarNovamente.Text = "Jogar Novamente";
+            this.btnJogarNovamente.UseVisualStyleBackColor = true;
+            this.btnJogarNovamente.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1356, 722);
+            this.Controls.Add(this.btnJogarNovamente);
             this.Controls.Add(this.lblMensagemFinal);
             this.Controls.Add(this.lblLetrasErradas);
             this.Controls.Add(this.btnNovoJogo);
@@ -195,5 +208,6 @@
         private System.Windows.Forms.Timer timerJogo;
         private System.Windows.Forms.Label lblLetrasErradas;
         private System.Windows.Forms.Label lblMensagemFinal;
+        private System.Windows.Forms.Button btnJogarNovamente;
     }
 }

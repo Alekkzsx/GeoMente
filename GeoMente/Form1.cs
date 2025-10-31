@@ -43,6 +43,8 @@ namespace GeoMente
             btnNovoJogo.Click += new EventHandler(btnNovoJogo_Click);
             btnAdivinhar.Click += new EventHandler(btnAdivinhar_Click);
             timerJogo.Tick += new EventHandler(timerJogo_Tick);
+            this.FormClosing += new FormClosingEventHandler(Form1_FormClosing);
+            btnJogarNovamente.Click += new EventHandler(btnJogarNovamente_Click);
 
             // Inicia o jogo assim que o formulário é carregado
             IniciarNovoJogo();
@@ -87,66 +89,7 @@ namespace GeoMente
             paisAtual = todosOsPaises[rand.Next(todosOsPaises.Count)];
             paisAtualNomeSemAcentos = RemoverAcentos(paisAtual.Nome);
 
-            // Libera a imagem anterior, se existir
-            if (pictureBoxBandeira.Image != null)
-            {
-                pictureBoxBandeira.Image.Dispose();
-            }
-
-            // Carrega a imagem da bandeira
-            string imagePath = Path.Combine(exeDir, paisAtual.CaminhoImagem);
-            if (File.Exists(imagePath))
-            {
-                try
-                {
-                    // Load the image using Image.FromFile
-                    Image loadedImage = Image.FromFile(imagePath);
-
-                    // Create a new Bitmap from the loaded image to ensure proper disposal
-                    // and avoid potential issues with Image.FromFile's internal locking.
-                    pictureBoxBandeira.Image = new Bitmap(loadedImage);
-
-                    // Dispose the original loaded image
-                    loadedImage.Dispose();
-                }
-                catch (ArgumentException ex)
-                {
-                    // Handle the case where the file is not a valid image or is corrupted
-                    Console.WriteLine($"Erro ao carregar imagem: {ex.Message}");
-                    // Display placeholder
-                    Bitmap bmp = new Bitmap(pictureBoxBandeira.Width, pictureBoxBandeira.Height);
-                    using (Graphics g = Graphics.FromImage(bmp))
-                    {
-                        g.Clear(Color.LightGray);
-                        g.DrawString("Erro ao carregar imagem", this.Font, Brushes.Black, 10, 10);
-                    }
-                    pictureBoxBandeira.Image = bmp;
-                }
-                catch (OutOfMemoryException ex)
-                {
-                    // Handle potential OutOfMemoryException again, though less likely with this approach
-                    Console.WriteLine($"Erro de memória ao carregar imagem: {ex.Message}");
-                    // Display placeholder
-                    Bitmap bmp = new Bitmap(pictureBoxBandeira.Width, pictureBoxBandeira.Height);
-                    using (Graphics g = Graphics.FromImage(bmp))
-                    {
-                        g.Clear(Color.LightGray);
-                        g.DrawString("Erro de memória", this.Font, Brushes.Black, 10, 10);
-                    }
-                    pictureBoxBandeira.Image = bmp;
-                }
-            }
-            else
-            {
-                // If the image file doesn't exist, display a placeholder
-                Bitmap bmp = new Bitmap(pictureBoxBandeira.Width, pictureBoxBandeira.Height);
-                using (Graphics g = Graphics.FromImage(bmp))
-                {
-                    g.Clear(Color.LightGray);
-                    g.DrawString("Imagem não encontrada", this.Font, Brushes.Black, 10, 10);
-                }
-                pictureBoxBandeira.Image = bmp;
-            }
+            CarregarImagemBandeira();
 
             // Inicializa a palavra exibida com underscores
             palavraExibida = new char[paisAtual.Nome.Length];
@@ -201,6 +144,8 @@ namespace GeoMente
 
             // Limpa a mensagem de fim de jogo
             lblMensagemFinal.Visible = false;
+            btnJogarNovamente.Visible = false;
+            btnNovoJogo.Visible = true;
         }
 
         private void btnNovoJogo_Click(object sender, EventArgs e)
@@ -295,6 +240,8 @@ namespace GeoMente
             timerJogo.Stop();
             txtLetra.Enabled = false;
             btnAdivinhar.Enabled = false;
+            btnNovoJogo.Visible = false;
+            btnJogarNovamente.Visible = true;
 
             if (vitoria)
             {
@@ -309,6 +256,11 @@ namespace GeoMente
                 lblMensagemFinal.ForeColor = Color.Red;
             }
             lblMensagemFinal.Visible = true;
+        }
+
+        private void btnJogarNovamente_Click(object sender, EventArgs e)
+        {
+            IniciarNovoJogo();
         }
 
         private void timerJogo_Tick(object sender, EventArgs e)
@@ -327,6 +279,50 @@ namespace GeoMente
         private void pictureBoxBandeira_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void CarregarImagemBandeira()
+        {
+            if (pictureBoxBandeira.Image != null)
+            {
+                pictureBoxBandeira.Image.Dispose();
+                pictureBoxBandeira.Image = null;
+            }
+
+            string imagePath = Path.Combine(exeDir, paisAtual.CaminhoImagem);
+            if (File.Exists(imagePath))
+            {
+                try
+                {
+                    using (Image originalImage = Image.FromFile(imagePath))
+                    {
+                        int newWidth = pictureBoxBandeira.Width;
+                        int newHeight = (int)((double)originalImage.Height / originalImage.Width * newWidth);
+                        Bitmap resizedImage = new Bitmap(originalImage, newWidth, newHeight);
+                        pictureBoxBandeira.Image = resizedImage;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erro ao carregar ou redimensionar imagem: {ex.Message}");
+                    // Lógica de fallback para exibir uma imagem de erro
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Imagem não encontrada: {imagePath}");
+                // Lógica de fallback para exibir uma imagem de erro
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Libera a imagem ao fechar o formulário para evitar memory leaks
+            if (pictureBoxBandeira.Image != null)
+            {
+                pictureBoxBandeira.Image.Dispose();
+                pictureBoxBandeira.Image = null;
+            }
         }
 
         private static string RemoverAcentos(string text)

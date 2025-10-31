@@ -38,6 +38,7 @@ namespace GeoMente
         {
             // Cria e exibe o formulário principal do jogo
             Form1 formJogo = new Form1();
+            formJogo.FormClosed += (s, args) => this.Close(); // Garante que a aplicação feche
             formJogo.Show();
             // Esconde a tela de entrada
             this.Hide();
