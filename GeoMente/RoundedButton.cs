@@ -23,7 +23,7 @@ namespace GeoMente
 
         public RoundedButton()
         {
-            this.FlatStyle = FlatStyle.Standard; // Change to Standard
+            this.FlatStyle = FlatStyle.Flat;
             this.FlatAppearance.BorderSize = 0;
             this.MouseEnter += OnMouseEnter;
             this.MouseLeave += OnMouseLeave;
