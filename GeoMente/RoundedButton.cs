@@ -23,7 +23,7 @@ namespace GeoMente
 
         public RoundedButton()
         {
-            this.FlatStyle = FlatStyle.Flat;
+            this.FlatStyle = FlatStyle.Standard; // Change to Standard
             this.FlatAppearance.BorderSize = 0;
             this.MouseEnter += OnMouseEnter;
             this.MouseLeave += OnMouseLeave;
@@ -47,34 +47,54 @@ namespace GeoMente
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
-            base.OnPaint(pevent);
-
-            // Ensure the radius doesn't exceed half the button's smaller dimension
-            int effectiveRadius = Math.Min(_borderRadius, Math.Min(this.Width, this.Height) / 2);
-
-            Rectangle rect = new Rectangle(0, 0, this.Width, this.Height);
-            GraphicsPath grPath = new GraphicsPath();
-
-            // Create the rounded rectangle path
-            grPath.AddArc(rect.X, rect.Y, effectiveRadius * 2, effectiveRadius * 2, 180, 90);
-            grPath.AddArc(rect.Right - (effectiveRadius * 2), rect.Y, effectiveRadius * 2, effectiveRadius * 2, 270, 90);
-            grPath.AddArc(rect.Right - (effectiveRadius * 2), rect.Bottom - (effectiveRadius * 2), effectiveRadius * 2, effectiveRadius * 2, 0, 90);
-            grPath.AddArc(rect.X, rect.Bottom - (effectiveRadius * 2), effectiveRadius * 2, effectiveRadius * 2, 90, 90);
-            grPath.CloseAllFigures();
-
-            this.Region = new Region(grPath);
-
-            // Draw the button
-            pevent.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            // Do NOT call base.OnPaint(pevent). We are taking over the drawing.
             
+            // Get the graphics path for the rounded rectangle
+            GraphicsPath grPath = GetRoundedPath(this.ClientRectangle, _borderRadius);
+
+            pevent.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
             // Use the current BackColor (which might be the hover color)
             using (SolidBrush brush = new SolidBrush(this.BackColor))
             {
+                // Fill ONLY the path, not the entire rectangle
                 pevent.Graphics.FillPath(brush, grPath);
             }
 
-            // Draw the text
+            // Draw the text in the center
             TextRenderer.DrawText(pevent.Graphics, this.Text, this.Font, this.ClientRectangle, this.ForeColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            // When the button is resized, update its region to the new rounded shape
+            this.Region = new Region(GetRoundedPath(this.ClientRectangle, _borderRadius));
+        }
+
+        private GraphicsPath GetRoundedPath(Rectangle rect, int radius)
+        {
+            // Ensure the radius doesn't exceed half the button's smaller dimension
+            int effectiveRadius = Math.Min(radius, Math.Min(rect.Width, rect.Height) / 2);
+            
+            GraphicsPath grPath = new GraphicsPath();
+
+            if (effectiveRadius > 0)
+            {
+                // Create the rounded rectangle path
+                grPath.AddArc(rect.X, rect.Y, effectiveRadius * 2, effectiveRadius * 2, 180, 90);
+                grPath.AddArc(rect.Right - (effectiveRadius * 2), rect.Y, effectiveRadius * 2, effectiveRadius * 2, 270, 90);
+                grPath.AddArc(rect.Right - (effectiveRadius * 2), rect.Bottom - (effectiveRadius * 2), effectiveRadius * 2, effectiveRadius * 2, 0, 90);
+                grPath.AddArc(rect.X, rect.Bottom - (effectiveRadius * 2), effectiveRadius * 2, effectiveRadius * 2, 90, 90);
+                grPath.CloseAllFigures();
+            }
+            else
+            {
+                // If radius is 0, just add a rectangle
+                grPath.AddRectangle(rect);
+            }
+
+            return grPath;
         }
     }
 }

@@ -16,5 +16,3 @@ C:\Users\TEMP\Documents\GeoMente\GeoMente\bin\Debug\bin\Debug\bandeiras\brasil.p
 C:\Users\TEMP\Documents\GeoMente\GeoMente\bin\Debug\bin\Debug\bandeiras\eua.png
 C:\Users\TEMP\Documents\GeoMente\GeoMente\bin\Debug\bin\Debug\bandeiras\japao.png
 C:\Users\TEMP\Documents\GeoMente\GeoMente\bin\Debug\GeoMente-logo.png
-C:\Users\ALEX1\OneDrive\Documentos\GitHub\GeoMente\GeoMente\obj\Debug\GeoMente.exe
-C:\Users\ALEX1\OneDrive\Documentos\GitHub\GeoMente\GeoMente\obj\Debug\GeoMente.pdb
