@@ -18,8 +18,8 @@ namespace GeoMente
         private void InitializeComponent()
         {
             this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
-            this.btnJogar = new GeoMente.RoundedButton();
-            this.btnSair = new GeoMente.RoundedButton();
+            this.btnJogar = new System.Windows.Forms.Button();
+            this.btnSair = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -41,13 +41,12 @@ namespace GeoMente
             this.btnJogar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnJogar.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnJogar.ForeColor = System.Drawing.Color.White;
-            this.btnJogar.Location = new System.Drawing.Point(598, 380);
+            this.btnJogar.Location = new System.Drawing.Point(578, 380);
             this.btnJogar.Name = "btnJogar";
-            this.btnJogar.Size = new System.Drawing.Size(160, 160); // Square for perfect circle
+            this.btnJogar.Size = new System.Drawing.Size(200, 60);
             this.btnJogar.TabIndex = 1;
             this.btnJogar.Text = "Jogar";
             this.btnJogar.UseVisualStyleBackColor = false;
-            this.btnJogar.BorderRadius = 80; // Half of the size
             // 
             // btnSair
             // 
@@ -57,13 +56,12 @@ namespace GeoMente
             this.btnSair.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSair.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSair.ForeColor = System.Drawing.Color.White;
-            this.btnSair.Location = new System.Drawing.Point(628, 560);
+            this.btnSair.Location = new System.Drawing.Point(603, 460);
             this.btnSair.Name = "btnSair";
-            this.btnSair.Size = new System.Drawing.Size(100, 100); // Square for perfect circle
+            this.btnSair.Size = new System.Drawing.Size(150, 50);
             this.btnSair.TabIndex = 2;
             this.btnSair.Text = "Sair";
             this.btnSair.UseVisualStyleBackColor = false;
-            this.btnSair.BorderRadius = 50; // Half of the size
             // 
             // FormEntrada
             // 
@@ -83,7 +81,7 @@ namespace GeoMente
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBoxLogo;
-        private RoundedButton btnJogar;
-        private RoundedButton btnSair;
+        private System.Windows.Forms.Button btnJogar;
+        private System.Windows.Forms.Button btnSair;
     }
 }

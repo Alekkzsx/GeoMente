@@ -9,7 +9,6 @@ namespace GeoMente
     {
         private int _borderRadius = 15;
         private Color _originalBackColor;
-        private bool _isHovering = false;
 
         public int BorderRadius
         {
@@ -23,7 +22,7 @@ namespace GeoMente
 
         public RoundedButton()
         {
-            this.FlatStyle = FlatStyle.Flat;
+            this.FlatStyle = FlatStyle.Standard;
             this.FlatAppearance.BorderSize = 0;
             this.MouseEnter += OnMouseEnter;
             this.MouseLeave += OnMouseLeave;
@@ -31,7 +30,6 @@ namespace GeoMente
 
         private void OnMouseEnter(object sender, EventArgs e)
         {
-            _isHovering = true;
             _originalBackColor = this.BackColor;
             // Lighten the back color for hover effect
             this.BackColor = ControlPaint.Light(_originalBackColor, 0.2f);
@@ -40,7 +38,6 @@ namespace GeoMente
 
         private void OnMouseLeave(object sender, EventArgs e)
         {
-            _isHovering = false;
             this.BackColor = _originalBackColor;
             Invalidate();
         }

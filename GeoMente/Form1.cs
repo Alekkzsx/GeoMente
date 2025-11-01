@@ -155,7 +155,19 @@ namespace GeoMente
 
         private void AtualizarPalavraExibida()
         {
-            lblPalavraSecreta.Text = string.Join(" ", palavraExibida);
+            if (palavraExibida == null) return;
+
+            // Use a StringBuilder to explicitly construct the display text with spaces.
+            StringBuilder displayText = new StringBuilder();
+            for (int i = 0; i < palavraExibida.Length; i++)
+            {
+                displayText.Append(palavraExibida[i]);
+                if (i < palavraExibida.Length - 1)
+                {
+                    displayText.Append(' ');
+                }
+            }
+            lblPalavraSecreta.Text = displayText.ToString();
         }
 
         private void AtualizarInterface()
