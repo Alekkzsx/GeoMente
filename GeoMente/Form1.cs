@@ -33,10 +33,20 @@ namespace GeoMente
         private int tempoRestante;
         private int pontuacao;
         private List<char> letrasErradas = new List<char>();
+        private int tempoTotalPartida;
+        private float anguloAtual = 0;
+        private Image imagemBandeiraOriginal;
+
 
         public Form1()
         {
             InitializeComponent();
+
+            // Habilita Double Buffering para suavizar a animação
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint |
+                          ControlStyles.UserPaint |
+                          ControlStyles.OptimizedDoubleBuffer, true);
+
             CarregarPaises();
 
             // Adicionando os event handlers
@@ -45,6 +55,7 @@ namespace GeoMente
             timerJogo.Tick += new EventHandler(timerJogo_Tick);
             this.FormClosing += new FormClosingEventHandler(Form1_FormClosing);
             btnJogarNovamente.Click += new EventHandler(btnJogarNovamente_Click);
+            pictureBoxBandeira.Paint += new PaintEventHandler(pictureBoxBandeira_Paint);
 
             // Inicia o jogo assim que o formulário é carregado
             IniciarNovoJogo();
@@ -89,7 +100,10 @@ namespace GeoMente
             paisAtual = todosOsPaises[rand.Next(todosOsPaises.Count)];
             paisAtualNomeSemAcentos = RemoverAcentos(paisAtual.Nome);
 
+            // Prepara a animação da bandeira
+            anguloAtual = 0;
             CarregarImagemBandeira();
+
 
             // Inicializa a palavra exibida com underscores
             palavraExibida = new char[paisAtual.Nome.Length];
@@ -129,6 +143,7 @@ namespace GeoMente
                     tempoRestante = 50;
                     break;
             }
+            tempoTotalPartida = tempoRestante; // Armazena o tempo inicial
 
             // Reseta pontuação e letras erradas
             pontuacao = 0;
@@ -281,6 +296,21 @@ namespace GeoMente
             {
                 tempoRestante--;
                 lblTempo.Text = "Tempo restante: " + tempoRestante + "s";
+
+                // Calcula o ângulo da animação com base no tempo
+                float tempoDecorrido = tempoTotalPartida - tempoRestante;
+                float duracaoAnimacao = tempoTotalPartida - 3; // Animação termina 3s antes
+                if (duracaoAnimacao <= 0) duracaoAnimacao = 1; // Evita divisão por zero
+
+                float progresso = tempoDecorrido / duracaoAnimacao;
+                anguloAtual = progresso * 360;
+
+                if (anguloAtual > 360)
+                {
+                    anguloAtual = 360;
+                }
+
+                pictureBoxBandeira.Invalidate(); // Redesenha a bandeira
             }
             else
             {
@@ -293,47 +323,84 @@ namespace GeoMente
 
         }
 
+        private void pictureBoxBandeira_Paint(object sender, PaintEventArgs e)
+        {
+            if (imagemBandeiraOriginal != null)
+            {
+                e.Graphics.Clear(pictureBoxBandeira.BackColor);
+
+                // Proporção da imagem original (1200x720)
+                const float aspectRatio = 1200f / 720f;
+
+                // Calcula as dimensões do retângulo de destino mantendo a proporção
+                int larguraDestino = pictureBoxBandeira.Width;
+                int alturaDestino = (int)(larguraDestino / aspectRatio);
+
+                if (alturaDestino > pictureBoxBandeira.Height)
+                {
+                    alturaDestino = pictureBoxBandeira.Height;
+                    larguraDestino = (int)(alturaDestino * aspectRatio);
+                }
+
+                // Centraliza a imagem no PictureBox
+                int x = (pictureBoxBandeira.Width - larguraDestino) / 2;
+                int y = (pictureBoxBandeira.Height - alturaDestino) / 2;
+
+                Rectangle destRect = new Rectangle(x, y, larguraDestino, alturaDestino);
+
+                // Cria o caminho (path) da fatia de pizza para usar como clipe
+                using (System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath())
+                {
+                    path.AddPie(destRect, -90, anguloAtual);
+
+                    // Define a região de clipe dos gráficos para o caminho da fatia
+                    e.Graphics.SetClip(path);
+
+                    // Desenha a imagem inteira, que será cortada pela região de clipe
+                    e.Graphics.DrawImage(imagemBandeiraOriginal, destRect);
+
+                    // Reseta a região de clipe para não afetar outros desenhos
+                    e.Graphics.ResetClip();
+                }
+            }
+        }
+
+
         private void CarregarImagemBandeira()
         {
-            if (pictureBoxBandeira.Image != null)
+            if (imagemBandeiraOriginal != null)
             {
-                pictureBoxBandeira.Image.Dispose();
-                pictureBoxBandeira.Image = null;
+                imagemBandeiraOriginal.Dispose();
             }
+            pictureBoxBandeira.Image = null; // Limpa a imagem antiga do PictureBox
 
             string imagePath = Path.Combine(exeDir, paisAtual.CaminhoImagem);
             if (File.Exists(imagePath))
             {
                 try
                 {
-                    using (Image originalImage = Image.FromFile(imagePath))
-                    {
-                        int newWidth = pictureBoxBandeira.Width;
-                        int newHeight = (int)((double)originalImage.Height / originalImage.Width * newWidth);
-                        Bitmap resizedImage = new Bitmap(originalImage, newWidth, newHeight);
-                        pictureBoxBandeira.Image = resizedImage;
-                    }
+                    imagemBandeiraOriginal = Image.FromFile(imagePath);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Erro ao carregar ou redimensionar imagem: {ex.Message}");
-                    // Lógica de fallback para exibir uma imagem de erro
+                    Console.WriteLine($"Erro ao carregar imagem: {ex.Message}");
+                    imagemBandeiraOriginal = null;
                 }
             }
             else
             {
                 Console.WriteLine($"Imagem não encontrada: {imagePath}");
-                // Lógica de fallback para exibir uma imagem de erro
+                imagemBandeiraOriginal = null;
             }
+            pictureBoxBandeira.Invalidate(); // Inicia o processo de desenho
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Libera a imagem ao fechar o formulário para evitar memory leaks
-            if (pictureBoxBandeira.Image != null)
+            if (imagemBandeiraOriginal != null)
             {
-                pictureBoxBandeira.Image.Dispose();
-                pictureBoxBandeira.Image = null;
+                imagemBandeiraOriginal.Dispose();
             }
         }
 
