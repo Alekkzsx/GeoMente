@@ -59,9 +59,22 @@ namespace GeoMente
             btnJogarNovamente.Click += new EventHandler(btnJogarNovamente_Click);
             pictureBoxBandeira.Paint += new PaintEventHandler(pictureBoxBandeira_Paint);
             btnVoltar.Click += new EventHandler(btnVoltar_Click);
+            this.Resize += new System.EventHandler(this.Form1_Resize);
+
 
             // Inicia o jogo assim que o formulário é carregado
             IniciarNovoJogo();
+            // Garante a centralização inicial
+            Form1_Resize(null, null);
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            // Centraliza o painel de adivinhação
+            panelAdivinhar.Left = (this.ClientSize.Width - panelAdivinhar.Width) / 2;
+
+            // Centraliza a mensagem final
+            lblMensagemFinal.Left = (this.ClientSize.Width - lblMensagemFinal.Width) / 2;
         }
 
         private void CarregarPaises()

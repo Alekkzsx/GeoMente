@@ -42,7 +42,9 @@
             this.lblMensagemFinal = new System.Windows.Forms.Label();
             this.btnJogarNovamente = new System.Windows.Forms.Button();
             this.btnVoltar = new System.Windows.Forms.Button();
+            this.panelAdivinhar = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBandeira)).BeginInit();
+            this.panelAdivinhar.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBoxBandeira
@@ -58,6 +60,8 @@
             // 
             // lblPalavraSecreta
             // 
+            this.lblPalavraSecreta.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPalavraSecreta.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPalavraSecreta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(58)))), ((int)(((byte)(64)))));
             this.lblPalavraSecreta.Location = new System.Drawing.Point(12, 284);
@@ -70,7 +74,7 @@
             // txtLetra
             // 
             this.txtLetra.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLetra.Location = new System.Drawing.Point(427, 358);
+            this.txtLetra.Location = new System.Drawing.Point(3, 3);
             this.txtLetra.MaxLength = 1;
             this.txtLetra.Name = "txtLetra";
             this.txtLetra.Size = new System.Drawing.Size(50, 43);
@@ -84,7 +88,7 @@
             this.btnAdivinhar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAdivinhar.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdivinhar.ForeColor = System.Drawing.Color.White;
-            this.btnAdivinhar.Location = new System.Drawing.Point(493, 358);
+            this.btnAdivinhar.Location = new System.Drawing.Point(59, 3);
             this.btnAdivinhar.Name = "btnAdivinhar";
             this.btnAdivinhar.Size = new System.Drawing.Size(100, 42);
             this.btnAdivinhar.TabIndex = 3;
@@ -93,10 +97,11 @@
             // 
             // lblTentativas
             // 
+            this.lblTentativas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblTentativas.AutoSize = true;
             this.lblTentativas.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTentativas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(58)))), ((int)(((byte)(64)))));
-            this.lblTentativas.Location = new System.Drawing.Point(24, 480);
+            this.lblTentativas.Location = new System.Drawing.Point(8, 499);
             this.lblTentativas.Name = "lblTentativas";
             this.lblTentativas.Size = new System.Drawing.Size(158, 21);
             this.lblTentativas.TabIndex = 4;
@@ -104,10 +109,11 @@
             // 
             // lblTempo
             // 
+            this.lblTempo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblTempo.AutoSize = true;
             this.lblTempo.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTempo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(58)))), ((int)(((byte)(64)))));
-            this.lblTempo.Location = new System.Drawing.Point(24, 510);
+            this.lblTempo.Location = new System.Drawing.Point(8, 529);
             this.lblTempo.Name = "lblTempo";
             this.lblTempo.Size = new System.Drawing.Size(125, 21);
             this.lblTempo.TabIndex = 5;
@@ -115,10 +121,11 @@
             // 
             // lblPontuacao
             // 
+            this.lblPontuacao.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblPontuacao.AutoSize = true;
             this.lblPontuacao.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPontuacao.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(58)))), ((int)(((byte)(64)))));
-            this.lblPontuacao.Location = new System.Drawing.Point(24, 540);
+            this.lblPontuacao.Location = new System.Drawing.Point(8, 559);
             this.lblPontuacao.Name = "lblPontuacao";
             this.lblPontuacao.Size = new System.Drawing.Size(89, 21);
             this.lblPontuacao.TabIndex = 6;
@@ -126,6 +133,7 @@
             // 
             // btnNovoJogo
             // 
+            this.btnNovoJogo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNovoJogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(255)))));
             this.btnNovoJogo.FlatAppearance.BorderSize = 0;
             this.btnNovoJogo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -144,10 +152,11 @@
             // 
             // lblLetrasErradas
             // 
+            this.lblLetrasErradas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblLetrasErradas.AutoSize = true;
             this.lblLetrasErradas.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLetrasErradas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(58)))), ((int)(((byte)(64)))));
-            this.lblLetrasErradas.Location = new System.Drawing.Point(24, 450);
+            this.lblLetrasErradas.Location = new System.Drawing.Point(8, 469);
             this.lblLetrasErradas.Name = "lblLetrasErradas";
             this.lblLetrasErradas.Size = new System.Drawing.Size(114, 21);
             this.lblLetrasErradas.TabIndex = 8;
@@ -155,6 +164,8 @@
             // 
             // lblMensagemFinal
             // 
+            this.lblMensagemFinal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblMensagemFinal.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMensagemFinal.Location = new System.Drawing.Point(12, 398);
             this.lblMensagemFinal.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -166,6 +177,7 @@
             // 
             // btnJogarNovamente
             // 
+            this.btnJogarNovamente.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnJogarNovamente.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(255)))));
             this.btnJogarNovamente.FlatAppearance.BorderSize = 0;
             this.btnJogarNovamente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -182,6 +194,7 @@
             // 
             // btnVoltar
             // 
+            this.btnVoltar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnVoltar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
             this.btnVoltar.FlatAppearance.BorderSize = 0;
             this.btnVoltar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -194,12 +207,23 @@
             this.btnVoltar.Text = "Voltar";
             this.btnVoltar.UseVisualStyleBackColor = false;
             // 
+            // panelAdivinhar
+            // 
+            this.panelAdivinhar.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.panelAdivinhar.Controls.Add(this.txtLetra);
+            this.panelAdivinhar.Controls.Add(this.btnAdivinhar);
+            this.panelAdivinhar.Location = new System.Drawing.Point(424, 355);
+            this.panelAdivinhar.Name = "panelAdivinhar";
+            this.panelAdivinhar.Size = new System.Drawing.Size(162, 50);
+            this.panelAdivinhar.TabIndex = 12;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.ClientSize = new System.Drawing.Size(1017, 587);
+            this.Controls.Add(this.panelAdivinhar);
             this.Controls.Add(this.btnVoltar);
             this.Controls.Add(this.btnJogarNovamente);
             this.Controls.Add(this.lblMensagemFinal);
@@ -208,13 +232,13 @@
             this.Controls.Add(this.lblPontuacao);
             this.Controls.Add(this.lblTempo);
             this.Controls.Add(this.lblTentativas);
-            this.Controls.Add(this.btnAdivinhar);
-            this.Controls.Add(this.txtLetra);
             this.Controls.Add(this.lblPalavraSecreta);
             this.Controls.Add(this.pictureBoxBandeira);
             this.Name = "Form1";
             this.Text = "GeoMente";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBandeira)).EndInit();
+            this.panelAdivinhar.ResumeLayout(false);
+            this.panelAdivinhar.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -235,5 +259,6 @@
         private System.Windows.Forms.Label lblMensagemFinal;
         private System.Windows.Forms.Button btnJogarNovamente;
         private System.Windows.Forms.Button btnVoltar;
+        private System.Windows.Forms.Panel panelAdivinhar;
     }
 }

@@ -32,6 +32,30 @@ namespace GeoMente
             // Adicionando os event handlers para os botões
             this.btnJogar.Click += new System.EventHandler(this.btnJogar_Click);
             this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
+            this.Resize += new System.EventHandler(this.FormEntrada_Resize);
+
+            // Centraliza os controles na inicialização
+            CenterControls();
+        }
+
+        private void FormEntrada_Resize(object sender, EventArgs e)
+        {
+            CenterControls();
+        }
+
+        private void CenterControls()
+        {
+            // Centraliza a Logo
+            pictureBoxLogo.Left = (this.ClientSize.Width - pictureBoxLogo.Width) / 2;
+            pictureBoxLogo.Top = (this.ClientSize.Height - pictureBoxLogo.Height) / 2 - 100; // Um pouco para cima
+
+            // Centraliza o botão Jogar
+            btnJogar.Left = (this.ClientSize.Width - btnJogar.Width) / 2;
+            btnJogar.Top = pictureBoxLogo.Bottom + 20;
+
+            // Centraliza o botão Sair
+            btnSair.Left = (this.ClientSize.Width - btnSair.Width) / 2;
+            btnSair.Top = btnJogar.Bottom + 10;
         }
 
         private void btnJogar_Click(object sender, EventArgs e)
