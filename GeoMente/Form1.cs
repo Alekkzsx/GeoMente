@@ -36,11 +36,13 @@ namespace GeoMente
         private int tempoTotalPartida;
         private float anguloAtual = 0;
         private Image imagemBandeiraOriginal;
+        private Form formEntrada;
 
 
-        public Form1()
+        public Form1(Form formEntrada)
         {
             InitializeComponent();
+            this.formEntrada = formEntrada;
 
             // Habilita Double Buffering para suavizar a animação
             this.SetStyle(ControlStyles.AllPaintingInWmPaint |
@@ -56,6 +58,7 @@ namespace GeoMente
             this.FormClosing += new FormClosingEventHandler(Form1_FormClosing);
             btnJogarNovamente.Click += new EventHandler(btnJogarNovamente_Click);
             pictureBoxBandeira.Paint += new PaintEventHandler(pictureBoxBandeira_Paint);
+            btnVoltar.Click += new EventHandler(btnVoltar_Click);
 
             // Inicia o jogo assim que o formulário é carregado
             IniciarNovoJogo();
@@ -288,6 +291,13 @@ namespace GeoMente
         private void btnJogarNovamente_Click(object sender, EventArgs e)
         {
             IniciarNovoJogo();
+        }
+
+        private void btnVoltar_Click(object sender, EventArgs e)
+        {
+            timerJogo.Stop();
+            this.formEntrada.Show();
+            this.Close();
         }
 
         private void timerJogo_Tick(object sender, EventArgs e)
