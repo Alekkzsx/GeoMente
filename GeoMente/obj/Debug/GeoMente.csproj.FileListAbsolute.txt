@@ -35,3 +35,9 @@ C:\Users\ALEX1\OneDrive\Documentos\GitHub\GeoMente\GeoMente\bin\Debug\GeoMente.e
 C:\Users\ALEX1\OneDrive\Documentos\GitHub\GeoMente\GeoMente\obj\Debug\GeoMente.exe
 C:\Users\ALEX1\OneDrive\Documentos\GitHub\GeoMente\GeoMente\obj\Debug\GeoMente.pdb
 C:\Users\ALEX1\OneDrive\Documentos\GitHub\GeoMente\GeoMente\bin\Debug\GeoMente.pdb
+C:\Users\24802449\Documents\GeoMente\GeoMente\obj\Debug\GeoMente.csproj.AssemblyReference.cache
+C:\Users\24802449\Documents\GeoMente\GeoMente\obj\Debug\GeoMente.Form1.resources
+C:\Users\24802449\Documents\GeoMente\GeoMente\obj\Debug\GeoMente.FormEntrada.resources
+C:\Users\24802449\Documents\GeoMente\GeoMente\obj\Debug\GeoMente.Properties.Resources.resources
+C:\Users\24802449\Documents\GeoMente\GeoMente\obj\Debug\GeoMente.csproj.GenerateResource.cache
+C:\Users\24802449\Documents\GeoMente\GeoMente\obj\Debug\GeoMente.csproj.CoreCompileInputs.cache
