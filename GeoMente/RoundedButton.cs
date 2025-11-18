@@ -14,7 +14,15 @@ namespace GeoMente
         public Color OriginalBackColor
         {
             get { return _originalBackColor; }
-            set { _originalBackColor = value; BackColor = value; }
+            set
+            {
+                _originalBackColor = value;
+                BackColor = value;
+                if (_hoverBackColor == Color.Empty)
+                {
+                    _hoverBackColor = ControlPaint.Light(value, 0.2f);
+                }
+            }
         }
 
         public Color HoverBackColor

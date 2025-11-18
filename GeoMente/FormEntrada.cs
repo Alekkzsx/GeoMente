@@ -46,21 +46,17 @@ namespace GeoMente
 
         private void CenterControls()
         {
-            // Centraliza o painel central
-            panelCentral.Left = (this.ClientSize.Width - panelCentral.Width) / 2;
-            panelCentral.Top = (this.ClientSize.Height - panelCentral.Height) / 2;
-
-            // Centraliza a Logo dentro do painel
-            pictureBoxLogo.Left = (panelCentral.Width - pictureBoxLogo.Width) / 2;
-            pictureBoxLogo.Top = 0;
+            // Centraliza a Logo
+            pictureBoxLogo.Left = (this.ClientSize.Width - pictureBoxLogo.Width) / 2;
+            pictureBoxLogo.Top = (this.ClientSize.Height - (pictureBoxLogo.Height + btnJogar.Height + btnSair.Height + 30)) / 2; // 30 é o espaçamento total entre os elementos
 
             // Centraliza o botão Jogar
-            btnJogar.Left = (panelCentral.Width - btnJogar.Width) / 2;
-            btnJogar.Top = pictureBoxLogo.Bottom + 20;
+            btnJogar.Left = (this.ClientSize.Width - btnJogar.Width) / 2;
+            btnJogar.Top = pictureBoxLogo.Bottom + 10; // 10 pixels de espaçamento
 
             // Centraliza o botão Sair
-            btnSair.Left = (panelCentral.Width - btnSair.Width) / 2;
-            btnSair.Top = btnJogar.Bottom + 10;
+            btnSair.Left = (this.ClientSize.Width - btnSair.Width) / 2;
+            btnSair.Top = btnJogar.Bottom + 10; // 10 pixels de espaçamento
         }
 
         private void btnJogar_Click(object sender, EventArgs e)
@@ -78,5 +74,9 @@ namespace GeoMente
             Application.Exit();
         }
 
+        private void pictureBoxLogo_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
