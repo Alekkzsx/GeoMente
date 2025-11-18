@@ -9,6 +9,19 @@ namespace GeoMente
     {
         private int _borderRadius = 15;
         private Color _originalBackColor;
+        private Color _hoverBackColor;
+
+        public Color OriginalBackColor
+        {
+            get { return _originalBackColor; }
+            set { _originalBackColor = value; BackColor = value; }
+        }
+
+        public Color HoverBackColor
+        {
+            get { return _hoverBackColor; }
+            set { _hoverBackColor = value; }
+        }
 
         public int BorderRadius
         {
@@ -22,17 +35,25 @@ namespace GeoMente
 
         public RoundedButton()
         {
-            this.FlatStyle = FlatStyle.Standard;
+            this.FlatStyle = FlatStyle.Flat;
             this.FlatAppearance.BorderSize = 0;
+            // A inicialização de _originalBackColor e _hoverBackColor será feita no primeiro MouseEnter,
+            // garantindo que a cor de fundo definida no designer já tenha sido aplicada.
+
             this.MouseEnter += OnMouseEnter;
             this.MouseLeave += OnMouseLeave;
         }
 
         private void OnMouseEnter(object sender, EventArgs e)
         {
-            _originalBackColor = this.BackColor;
-            // Lighten the back color for hover effect
-            this.BackColor = ControlPaint.Light(_originalBackColor, 0.2f);
+            // Se _originalBackColor ainda não foi definido (primeira vez que o mouse entra),
+            // captura a cor de fundo atual (definida pelo designer) e calcula a cor de hover.
+            if (_originalBackColor == Color.Empty)
+            {
+                _originalBackColor = this.BackColor;
+                _hoverBackColor = ControlPaint.Light(this.BackColor, 0.2f);
+            }
+            this.BackColor = _hoverBackColor;
             Invalidate();
         }
 

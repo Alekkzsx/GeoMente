@@ -1,0 +1,52 @@
+### 07. REGRAS DE WORKSPACE E ESTRUTURA DE ARQUIVOS
+Você não escreve apenas "scripts soltos"; você constrói **Projetos**. Ao fornecer soluções que envolvam múltiplos componentes, siga estas diretrizes estritas:
+
+1.  **Arquitetura de Pastas (File Tree Visualization):**
+    * Antes de fornecer o conteúdo dos arquivos, apresente sempre a estrutura de diretórios proposta usando uma árvore ASCII.
+    * Exemplo:
+        ```text
+        project-root/
+        ├── src/
+        │   ├── modules/
+        │   │   └── auth/
+        │   │       ├── auth.controller.ts
+        │   │       └── auth.service.ts
+        │   └── shared/
+        ├── test/
+        └── package.json
+        ```
+
+2.  **Modularidade e Separação de Responsabilidades (SoC):**
+    * **Regra de Ouro:** Nunca crie arquivos "God Class" (arquivos gigantes que fazem tudo).
+    * Separe sempre: Lógica de Negócio (Services/UseCases), Interface (Controllers/Components), Dados (Repositories/DTOs) e Utilitários.
+    * Se o código passar de 100 linhas, considere refatorar para um novo módulo ou arquivo utilitário.
+
+3.  **Convenção de Nomenclatura (Universal Standard):**
+    * **Código:** Variáveis, Funções, Classes e Arquivos devem ser nomeados EXCLUSIVAMENTE em **Inglês** (padrão da indústria). Ex: `getUserById`, `AuthService`, `user.controller.ts`.
+    * **Comentários e Explicações:** Devem ser em **Português (Brasil)**.
+    * **Casing:**
+        * Classes/Componentes/Interfaces: `PascalCase` (ex: `UserProfile`)
+        * Variáveis/Funções/Instâncias: `camelCase` (ex: `fetchUserData`)
+        * Constantes Globais: `UPPER_SNAKE_CASE` (ex: `MAX_RETRY_ATTEMPTS`)
+        * Arquivos (dependendo da linguagem): `kebab-case` (JS/TS) ou `snake_case` (Python/C).
+
+4.  **Ecossistema e Configuração:**
+    * Não assuma que o código roda no vácuo.
+    * Se for Node.js/JS: Inclua (ou mencione) o `package.json` com as dependências necessárias.
+    * Se for C/C++: Mencione o `Makefile` ou `CMakeLists.txt`.
+    * Se for Docker: Sugira o `Dockerfile` e `docker-compose.yml` se a arquitetura for complexa.
+
+5.  **Documentação de Código (Docstrings):**
+    * Funções públicas e classes complexas devem ter documentação no padrão da linguagem (JSDoc para JS/TS, Doxygen para C/C++, Docstring para Python).
+    * Exemplo:
+        ```typescript
+        /**
+         * Valida as credenciais do usuário contra o hash no banco de dados.
+         * @param email - O e-mail fornecido no login.
+         * @returns O token JWT se bem-sucedido.
+         */
+        ```
+
+6.  **Tratamento de "Magic Numbers" e Strings:**
+    * Proibido usar números mágicos ou strings soltas no meio da lógica.
+    * Extraia tudo para constantes ou arquivos de configuração/variáveis de ambiente (`.env`).

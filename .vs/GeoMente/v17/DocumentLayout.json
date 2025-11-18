@@ -3,20 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\24802449\\Documents\\GeoMente\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\24802449\\Documents\\GeoMente\\GeoMente\\GeoMente-logo.png||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:GeoMente\\GeoMente-logo.png||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\24802449\\Documents\\GeoMente\\GeoMente\\Form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:GeoMente\\Form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\24802449\\Documents\\GeoMente\\GeoMente\\Form1.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:GeoMente\\Form1.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\24802449\\Documents\\GeoMente\\GeoMente\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:GeoMente\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\24802449\\Documents\\GeoMente\\GeoMente\\Form1.Designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:GeoMente\\Form1.Designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\24802449\\Documents\\GeoMente\\GeoMente\\FormEntrada.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:GeoMente\\FormEntrada.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,42 +22,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "GeoMente-logo.png - PNG [1024x1024, 24 bits, PNG]",
-              "DocumentMoniker": "C:\\Users\\24802449\\Documents\\GeoMente\\GeoMente\\GeoMente-logo.png",
-              "RelativeDocumentMoniker": "GeoMente\\GeoMente-logo.png",
-              "ToolTip": "C:\\Users\\24802449\\Documents\\GeoMente\\GeoMente\\GeoMente-logo.png - PNG [1024x1024, 24 bits, PNG]",
-              "RelativeToolTip": "GeoMente\\GeoMente-logo.png - PNG [1024x1024, 24 bits, PNG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2025-11-13T19:59:20.665Z",
-              "EditorCaption": " - PNG [1024x1024, 24 bits, PNG]"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Form1.resx",
-              "DocumentMoniker": "C:\\Users\\24802449\\Documents\\GeoMente\\GeoMente\\Form1.resx",
-              "RelativeDocumentMoniker": "GeoMente\\Form1.resx",
-              "ToolTip": "C:\\Users\\24802449\\Documents\\GeoMente\\GeoMente\\Form1.resx",
-              "RelativeToolTip": "GeoMente\\Form1.resx",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2025-11-13T19:59:15.57Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "FormEntrada.resx",
-              "DocumentMoniker": "C:\\Users\\24802449\\Documents\\GeoMente\\GeoMente\\FormEntrada.resx",
-              "RelativeDocumentMoniker": "GeoMente\\FormEntrada.resx",
-              "ToolTip": "C:\\Users\\24802449\\Documents\\GeoMente\\GeoMente\\FormEntrada.resx",
-              "RelativeToolTip": "GeoMente\\FormEntrada.resx",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2025-11-13T19:58:07.231Z",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\24802449\\Documents\\GeoMente\\GeoMente\\Program.cs",
+              "RelativeDocumentMoniker": "GeoMente\\Program.cs",
+              "ToolTip": "C:\\Users\\24802449\\Documents\\GeoMente\\GeoMente\\Program.cs",
+              "RelativeToolTip": "GeoMente\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T19:16:12.873Z",
               "EditorCaption": ""
             },
             {
@@ -72,9 +45,22 @@
               "RelativeDocumentMoniker": "GeoMente\\Form1.Designer.cs",
               "ToolTip": "C:\\Users\\24802449\\Documents\\GeoMente\\GeoMente\\Form1.Designer.cs",
               "RelativeToolTip": "GeoMente\\Form1.Designer.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAsAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-30T14:25:37.932Z",
+              "WhenOpened": "2025-11-18T19:16:07.963Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\24802449\\Documents\\GeoMente\\GeoMente\\Form1.cs",
+              "RelativeDocumentMoniker": "GeoMente\\Form1.cs",
+              "ToolTip": "C:\\Users\\24802449\\Documents\\GeoMente\\GeoMente\\Form1.cs",
+              "RelativeToolTip": "GeoMente\\Form1.cs",
+              "ViewState": "AQIAAPkAAAAAAAAAAADgvzQBAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T19:04:14.014Z",
               "EditorCaption": ""
             }
           ]

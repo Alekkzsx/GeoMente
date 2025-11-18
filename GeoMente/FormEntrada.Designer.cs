@@ -18,23 +18,10 @@ namespace GeoMente
         private void InitializeComponent()
         {
             this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
-            this.btnJogar = new System.Windows.Forms.Button();
-            this.btnSair = new System.Windows.Forms.Button();
+            this.btnJogar = new GeoMente.RoundedButton();
+            this.btnSair = new GeoMente.RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.SuspendLayout();
-            // 
-            // webView21
-            // 
-            this.webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
-            this.webView21.AllowExternalDrop = true;
-            this.webView21.CreationProperties = null;
-            this.webView21.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.webView21.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webView21.Location = new System.Drawing.Point(0, 0);
-            this.webView21.Name = "webView21";
-            this.webView21.Size = new System.Drawing.Size(1356, 722);
-            this.webView21.TabIndex = 4;
-            this.webView21.ZoomFactor = 1D;
             // 
             // panelCentral
             // 
@@ -84,7 +71,7 @@ namespace GeoMente
             // 
             // panelCentral
             // 
-            this.panelCentral.BackColor = System.Drawing.Color.FromArgb(100, 0, 0, 0);
+            this.panelCentral.BackColor = System.Drawing.Color.Transparent;
             this.panelCentral.Controls.Add(this.pictureBoxLogo);
             this.panelCentral.Controls.Add(this.btnJogar);
             this.panelCentral.Controls.Add(this.btnSair);
@@ -97,10 +84,9 @@ namespace GeoMente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(27)))), ((int)(((byte)(42)))));
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1356, 722);
             this.Controls.Add(this.panelCentral);
-            this.Controls.Add(this.webView21);
             this.Name = "FormEntrada";
             this.Text = "Bem-vindo ao GeoMente";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
@@ -111,9 +97,8 @@ namespace GeoMente
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBoxLogo;
-        private System.Windows.Forms.Button btnJogar;
-        private System.Windows.Forms.Button btnSair;
+        private RoundedButton btnJogar;
+        private RoundedButton btnSair;
         private System.Windows.Forms.Panel panelCentral;
-        private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
     }
 }

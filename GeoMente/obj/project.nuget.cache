@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "5BTpsBMKT/k=",
+  "success": false,
+  "projectFilePath": "C:\\Users\\24802449\\Documents\\GeoMente\\GeoMente\\GeoMente.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Não é possível encontrar o pacote Microsoft.Web.WebView2.WinForms. Não existe nenhum pacote com esta ID nas origens: Microsoft Visual Studio Offline Packages, nuget.org",
+      "libraryId": "Microsoft.Web.WebView2.WinForms",
+      "targetGraphs": [
+        ".NETFramework,Version=v4.7.2"
+      ]
+    }
+  ]
+}

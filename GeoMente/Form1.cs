@@ -16,28 +16,10 @@ namespace GeoMente
     public partial class Form1 : Form
     {
         private readonly string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        private Random rand = new Random();
-        private string paisAtualNomeSemAcentos;
-        // Estrutura para armazenar os dados de cada país
-        private struct Pais
-        {
-            public string Nome;
-            public string CaminhoImagem;
-            public int Nivel;
-        }
-
-        private List<Pais> todosOsPaises = new List<Pais>();
-        private Pais paisAtual;
-        private char[] palavraExibida;
-        private int tentativasRestantes;
-        private int tempoRestante;
-        private int pontuacao;
-        private List<char> letrasErradas = new List<char>();
-        private int tempoTotalPartida;
+        private GerenciadorJogo jogo;
         private float anguloAtual = 0;
         private Image imagemBandeiraOriginal;
         private Form formEntrada;
-
 
         public Form1(Form formEntrada)
         {
@@ -49,8 +31,6 @@ namespace GeoMente
                           ControlStyles.UserPaint |
                           ControlStyles.OptimizedDoubleBuffer, true);
 
-            CarregarPaises();
-
             // Adicionando os event handlers
             btnNovoJogo.Click += new EventHandler(btnNovoJogo_Click);
             btnAdivinhar.Click += new EventHandler(btnAdivinhar_Click);
@@ -61,6 +41,8 @@ namespace GeoMente
             btnVoltar.Click += new EventHandler(btnVoltar_Click);
             this.Resize += new System.EventHandler(this.Form1_Resize);
 
+            // Cria a instância do gerenciador de jogo
+            jogo = new GerenciadorJogo();
 
             // Inicia o jogo assim que o formulário é carregado
             IniciarNovoJogo();
@@ -77,95 +59,16 @@ namespace GeoMente
             lblMensagemFinal.Left = (this.ClientSize.Width - lblMensagemFinal.Width) / 2;
         }
 
-        private void CarregarPaises()
-        {
-            string caminhoArquivo = Path.Combine(exeDir, "paises.txt");
-            if (File.Exists(caminhoArquivo))
-            {
-                string[] linhas = File.ReadAllLines(caminhoArquivo);
-                foreach (string linha in linhas)
-                {
-                    string[] partes = linha.Split(';');
-                    if (partes.Length == 3)
-                    {
-                        Pais p = new Pais
-                        {
-                            Nome = partes[0].ToUpper(),
-                            CaminhoImagem = partes[1],
-                            Nivel = int.Parse(partes[2])
-                        };
-                        todosOsPaises.Add(p);
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Arquivo 'paises.txt' não encontrado!");
-            }
-        }
-
         private void IniciarNovoJogo()
         {
-            if (todosOsPaises.Count == 0)
-            {
-                MessageBox.Show("Nenhum país carregado. Verifique o arquivo 'paises.txt'.");
-                return;
-            }
-
-            // Seleciona um país aleatoriamente
-            paisAtual = todosOsPaises[rand.Next(todosOsPaises.Count)];
-            paisAtualNomeSemAcentos = RemoverAcentos(paisAtual.Nome);
+            jogo.IniciarNovoJogo();
 
             // Prepara a animação da bandeira
             anguloAtual = 0;
             CarregarImagemBandeira();
 
-
-            // Inicializa a palavra exibida com underscores
-            palavraExibida = new char[paisAtual.Nome.Length];
-            for (int i = 0; i < paisAtual.Nome.Length; i++)
-            {
-                if (paisAtual.Nome[i] == ' ')
-                {
-                    palavraExibida[i] = ' ';
-                }
-                else
-                {
-                    palavraExibida[i] = '_';
-                }
-            }
+            // Atualiza a interface com o novo estado do jogo
             AtualizarPalavraExibida();
-
-            // Define tentativas e tempo com base no nível
-            // Nivel 1: 6 tentativas, 60s
-            // Nivel 2: 5 tentativas, 45s
-            // Nivel 3: 4 tentativas, 30s
-            switch (paisAtual.Nivel)
-            {
-                case 1:
-                    tentativasRestantes = 6;
-                    tempoRestante = 60;
-                    break;
-                case 2:
-                    tentativasRestantes = 5;
-                    tempoRestante = 45;
-                    break;
-                case 3:
-                    tentativasRestantes = 4;
-                    tempoRestante = 30;
-                    break;
-                default:
-                    tentativasRestantes = 5;
-                    tempoRestante = 50;
-                    break;
-            }
-            tempoTotalPartida = tempoRestante; // Armazena o tempo inicial
-
-            // Reseta pontuação e letras erradas
-            pontuacao = 0;
-            letrasErradas.Clear();
-
-            // Atualiza a interface
             AtualizarInterface();
 
             // Habilita controles e inicia o timer
@@ -186,14 +89,14 @@ namespace GeoMente
 
         private void AtualizarPalavraExibida()
         {
-            if (palavraExibida == null) return;
+            if (jogo.PalavraExibida == null) return;
 
             // Use a StringBuilder to explicitly construct the display text with spaces.
             StringBuilder displayText = new StringBuilder();
-            for (int i = 0; i < palavraExibida.Length; i++)
+            for (int i = 0; i < jogo.PalavraExibida.Length; i++)
             {
-                displayText.Append(palavraExibida[i]);
-                if (i < palavraExibida.Length - 1)
+                displayText.Append(jogo.PalavraExibida[i]);
+                if (i < jogo.PalavraExibida.Length - 1)
                 {
                     displayText.Append(' ');
                 }
@@ -203,82 +106,43 @@ namespace GeoMente
 
         private void AtualizarInterface()
         {
-            lblTentativas.Text = "Tentativas restantes: " + tentativasRestantes;
-            lblTempo.Text = "Tempo restante: " + tempoRestante + "s";
-            lblPontuacao.Text = "Pontuação: " + pontuacao;
-            lblLetrasErradas.Text = "Letras erradas: " + string.Join(", ", letrasErradas);
+            lblTentativas.Text = "Tentativas restantes: " + jogo.TentativasRestantes;
+            lblTempo.Text = "Tempo restante: " + jogo.TempoRestante + "s";
+            lblPontuacao.Text = "Pontuação: " + jogo.Pontuacao;
+            lblLetrasErradas.Text = "Letras erradas: " + string.Join(", ", jogo.LetrasErradas);
         }
 
         private void btnAdivinhar_Click(object sender, EventArgs e)
         {
-            if (palavraExibida == null || string.IsNullOrEmpty(txtLetra.Text))
+            if (!jogo.JogoEmAndamento || string.IsNullOrEmpty(txtLetra.Text))
             {
                 MessageBox.Show("Por favor, inicie um novo jogo e digite uma letra.");
                 return;
             }
 
-            char letra = txtLetra.Text.ToUpper()[0];
-
-            if (!char.IsLetter(letra))
+            if (!char.IsLetter(txtLetra.Text[0]))
             {
                 MessageBox.Show("Por favor, digite uma letra válida.");
                 txtLetra.Clear();
                 return;
             }
 
-            // Verificação segura de letras já tentadas
-            if (letrasErradas != null && letrasErradas.Contains(letra))
-            {
-                MessageBox.Show("Você já tentou esta letra.");
-                txtLetra.Clear();
-                return;
-            }
+            char letra = txtLetra.Text.ToUpper()[0];
+            jogo.AdivinharLetra(letra);
 
-            if (palavraExibida != null && palavraExibida.Contains(letra))
-            {
-                MessageBox.Show("Você já tentou esta letra.");
-                txtLetra.Clear();
-                return;
-            }
-
-            bool acertou = false;
-            for (int i = 0; i < paisAtualNomeSemAcentos.Length; i++)
-            {
-                if (paisAtualNomeSemAcentos[i] == letra)
-                {
-                    palavraExibida[i] = paisAtual.Nome[i];
-                    acertou = true;
-                }
-            }
-
-            if (acertou)
-            {
-                pontuacao += 10; // Ganha 10 pontos por acerto
-                AtualizarPalavraExibida();
-                // Verificar condição de vitória
-                if (!palavraExibida.Contains('_'))
-                {
-                    FimDeJogo(true); // Venceu
-                }
-            }
-            else
-            {
-                letrasErradas.Add(letra);
-                tentativasRestantes--;
-                pontuacao = Math.Max(0, pontuacao - 5); // Perde 5 pontos por erro, sem negativar
-                // Verificar condição de derrota
-                if (tentativasRestantes <= 0)
-                {
-                    FimDeJogo(false); // Perdeu
-                }
-            }
-
+            AtualizarPalavraExibida();
             AtualizarInterface();
+
+            if (!jogo.JogoEmAndamento)
+            {
+                FimDeJogo();
+            }
+
             txtLetra.Clear();
             txtLetra.Focus();
         }
 
-        private void FimDeJogo(bool vitoria)
+        private void FimDeJogo()
         {
             timerJogo.Stop();
             txtLetra.Enabled = false;
@@ -286,16 +150,15 @@ namespace GeoMente
             btnNovoJogo.Visible = false;
             btnJogarNovamente.Visible = true;
 
-            if (vitoria)
+            if (jogo.Vitoria)
             {
-                pontuacao += tempoRestante * 2; // Bônus por tempo restante
-                AtualizarInterface();
-                lblMensagemFinal.Text = "Parabéns! Você acertou a palavra! Pontuação final: " + pontuacao;
+                AtualizarInterface(); // Atualiza a pontuação com o bônus
+                lblMensagemFinal.Text = "Parabéns! Você acertou a palavra! Pontuação final: " + jogo.Pontuacao;
                 lblMensagemFinal.ForeColor = Color.Green;
             }
             else
             {
-                lblMensagemFinal.Text = "Fim de jogo! A palavra era: " + paisAtual.Nome;
+                lblMensagemFinal.Text = "Fim de jogo! A palavra era: " + jogo.PaisAtual.Nome;
                 lblMensagemFinal.ForeColor = Color.Red;
             }
             lblMensagemFinal.Visible = true;
@@ -315,14 +178,14 @@ namespace GeoMente
 
         private void timerJogo_Tick(object sender, EventArgs e)
         {
-            if (tempoRestante > 0)
+            if (jogo.JogoEmAndamento)
             {
-                tempoRestante--;
-                lblTempo.Text = "Tempo restante: " + tempoRestante + "s";
+                jogo.DecrementarTempo();
+                AtualizarInterface();
 
                 // Calcula o ângulo da animação com base no tempo
-                float tempoDecorrido = tempoTotalPartida - tempoRestante;
-                float duracaoAnimacao = tempoTotalPartida - 3; // Animação termina 3s antes
+                float tempoDecorrido = jogo.TempoTotalPartida - jogo.TempoRestante;
+                float duracaoAnimacao = jogo.TempoTotalPartida - 3; // Animação termina 3s antes
                 if (duracaoAnimacao <= 0) duracaoAnimacao = 1; // Evita divisão por zero
 
                 float progresso = tempoDecorrido / duracaoAnimacao;
@@ -334,17 +197,14 @@ namespace GeoMente
                 }
 
                 pictureBoxBandeira.Invalidate(); // Redesenha a bandeira
-            }
-            else
-            {
-                FimDeJogo(false); // O tempo acabou, o jogador perdeu
+
+                if (!jogo.JogoEmAndamento)
+                {
+                    FimDeJogo();
+                }
             }
         }
 
-        private void pictureBoxBandeira_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void pictureBoxBandeira_Paint(object sender, PaintEventArgs e)
         {
@@ -397,7 +257,9 @@ namespace GeoMente
             }
             pictureBoxBandeira.Image = null; // Limpa a imagem antiga do PictureBox
 
-            string imagePath = Path.Combine(exeDir, paisAtual.CaminhoImagem);
+            if (jogo.PaisAtual.CaminhoImagem == null) return;
+
+            string imagePath = Path.Combine(exeDir, jogo.PaisAtual.CaminhoImagem);
             if (File.Exists(imagePath))
             {
                 try
@@ -427,21 +289,24 @@ namespace GeoMente
             }
         }
 
-        private static string RemoverAcentos(string text)
+        private void btnVoltar_Click_1(object sender, EventArgs e)
         {
-            var normalizedString = text.Normalize(NormalizationForm.FormD);
-            var stringBuilder = new StringBuilder();
 
-            foreach (var c in normalizedString)
-            {
-                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
-                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
-                {
-                    stringBuilder.Append(c);
-                }
-            }
+        }
 
-            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+        private void lblPalavraSecreta_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblMensagemFinal_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnJogarNovamente_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

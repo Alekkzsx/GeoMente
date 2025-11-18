@@ -84,9 +84,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-      <Compile Include="RoundedButton.cs">
+    <Compile Include="RepositorioPaises.cs" />
+    <Compile Include="GerenciadorJogo.cs" />
+    <Compile Include="RoundedButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
