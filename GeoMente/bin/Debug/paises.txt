@@ -1,5 +1,0 @@
-BRASIL;bandeiras/brasil.png;1
-ARGENTINA;bandeiras/argentina.png;1
-ESTADOS UNIDOS;bandeiras/eua.png;2
-JAPAO;bandeiras/japao.png;2
-ALEMANHA;bandeiras/alemanha.png;3

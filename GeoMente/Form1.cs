@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -19,12 +20,16 @@ namespace GeoMente
         private GerenciadorJogo jogo;
         private float anguloAtual = 0;
         private Image imagemBandeiraOriginal;
-        private Form formEntrada;
+        private Form formAnterior;
+        private string modoJogo;
+        private string dificuldade;
 
-        public Form1(Form formEntrada)
+        public Form1(Form formAnterior, string modo = "Países", string dificuldade = "Fácil")
         {
             InitializeComponent();
-            this.formEntrada = formEntrada;
+            this.formAnterior = formAnterior;
+            this.modoJogo = modo;
+            this.dificuldade = dificuldade;
 
             // Habilita Double Buffering para suavizar a animação
             this.SetStyle(ControlStyles.AllPaintingInWmPaint |
@@ -34,34 +39,105 @@ namespace GeoMente
             // Adicionando os event handlers
             btnNovoJogo.Click += new EventHandler(btnNovoJogo_Click);
             btnAdivinhar.Click += new EventHandler(btnAdivinhar_Click);
+            btnAdivinharPalavra.Click += new EventHandler(btnAdivinharPalavra_Click);
             timerJogo.Tick += new EventHandler(timerJogo_Tick);
             this.FormClosing += new FormClosingEventHandler(Form1_FormClosing);
-            btnJogarNovamente.Click += new EventHandler(btnJogarNovamente_Click);
             pictureBoxBandeira.Paint += new PaintEventHandler(pictureBoxBandeira_Paint);
             btnVoltar.Click += new EventHandler(btnVoltar_Click);
+            btnDica.Click += new EventHandler(btnDica_Click);
             this.Resize += new System.EventHandler(this.Form1_Resize);
 
             // Cria a instância do gerenciador de jogo
-            jogo = new GerenciadorJogo();
+            jogo = new GerenciadorJogo(modoJogo);
 
-            // Inicia o jogo assim que o formulário é carregado
-            IniciarNovoJogo();
-            // Garante a centralização inicial
-            Form1_Resize(null, null);
+            // Inscreve-se no evento Load para iniciar o jogo quando a janela estiver pronta
+            this.Load += new EventHandler(Form1_Load);
+            
+            ConfigurarTema();
+        }
+
+        private void ConfigurarTema()
+        {
+            this.BackColor = Theme.Background;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Text = $"GeoMente - {modoJogo} ({dificuldade})";
+
+            // Estiliza Labels
+            EstilizarLabel(lblTentativas, Theme.Text);
+            EstilizarLabel(lblTempo, Theme.Text);
+            EstilizarLabel(lblPontuacao, Theme.Text);
+            EstilizarLabel(lblLetrasErradas, Theme.Error);
+            EstilizarLabel(lblTentativasPalavra, Theme.Warning);
+            
+            // Estiliza Botões
+            EstilizarBotao(btnAdivinhar, Theme.Primary);
+            EstilizarBotao(btnAdivinharPalavra, Theme.Secondary);
+            EstilizarBotao(btnNovoJogo, Theme.Success);
+            EstilizarBotao(btnVoltar, Theme.Surface);
+            EstilizarBotao(btnDica, Theme.Info);
+
+            // Estiliza Panels
+            panelAdivinhar.BackColor = Color.Transparent;
+            panelAdivinharPalavra.BackColor = Color.Transparent;
+            
+            // Ajusta PictureBox
+            pictureBoxBandeira.BackColor = Color.Transparent;
+        }
+
+        private void EstilizarLabel(Label lbl, Color color)
+        {
+            lbl.ForeColor = color;
+            lbl.Font = Theme.GetTextFont(12);
+        }
+
+        private void EstilizarBotao(Button btn, Color corFundo)
+        {
+            if (btn is RoundedButton rb)
+            {
+                rb.BackColor = corFundo;
+                rb.ForeColor = Theme.Text;
+                rb.BorderRadius = 15;
+            }
+            else
+            {
+                btn.BackColor = corFundo;
+                btn.ForeColor = Theme.Text;
+                btn.FlatStyle = FlatStyle.Flat;
+                btn.FlatAppearance.BorderSize = 0;
+            }
         }
 
         private void Form1_Resize(object sender, EventArgs e)
         {
             // Centraliza o painel de adivinhação
             panelAdivinhar.Left = (this.ClientSize.Width - panelAdivinhar.Width) / 2;
+            
+            // Centraliza o painel de adivinhação de palavra completa
+            panelAdivinharPalavra.Left = (this.ClientSize.Width - panelAdivinharPalavra.Width) / 2;
+            panelAdivinharPalavra.Top = panelAdivinhar.Bottom + 20; // Position below the letter guess panel
 
             // Centraliza a mensagem final
             lblMensagemFinal.Left = (this.ClientSize.Width - lblMensagemFinal.Width) / 2;
+
+            // Centraliza o FlowLayoutPanel da palavra secreta
+            if (flowPalavraSecreta != null)
+            {
+                 flowPalavraSecreta.Left = (this.ClientSize.Width - flowPalavraSecreta.Width) / 2;
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // Inicia o jogo assim que o formulário é carregado e o handle criado
+            IniciarNovoJogo();
+            // Garante a centralização inicial
+            Form1_Resize(null, null);
         }
 
         private void IniciarNovoJogo()
         {
-            jogo.IniciarNovoJogo();
+            // Passa a dificuldade selecionada para o gerenciador
+            jogo.IniciarNovoJogo(dificuldade);
 
             // Prepara a animação da bandeira
             anguloAtual = 0;
@@ -74,12 +150,16 @@ namespace GeoMente
             // Habilita controles e inicia o timer
             txtLetra.Enabled = true;
             btnAdivinhar.Enabled = true;
+            txtPalavraCompleta.Enabled = true;
+            btnAdivinharPalavra.Enabled = true;
+            txtPalavraCompleta.Clear();
             timerJogo.Start();
 
             // Limpa a mensagem de fim de jogo
             lblMensagemFinal.Visible = false;
-            btnJogarNovamente.Visible = false;
-            btnNovoJogo.Visible = true;
+
+            // Mostra o botão de dica apenas no modo Curiosidades
+            btnDica.Visible = (modoJogo == "Curiosidades");
         }
 
         private void btnNovoJogo_Click(object sender, EventArgs e)
@@ -91,38 +171,96 @@ namespace GeoMente
         {
             if (jogo.PalavraExibida == null) return;
 
-            // Use a StringBuilder to explicitly construct the display text with spaces.
-            StringBuilder displayText = new StringBuilder();
-            for (int i = 0; i < jogo.PalavraExibida.Length; i++)
+            // Se o número de controles não bater (ex: novo jogo), recria
+            if (flowPalavraSecreta.Controls.Count != jogo.PalavraExibida.Length)
             {
-                displayText.Append(jogo.PalavraExibida[i]);
-                if (i < jogo.PalavraExibida.Length - 1)
+                flowPalavraSecreta.Controls.Clear();
+                for (int i = 0; i < jogo.PalavraExibida.Length; i++)
                 {
-                    displayText.Append(' ');
+                    Label lblLetra = new Label();
+                    lblLetra.AutoSize = false;
+                    lblLetra.Size = new Size(50, 60); // Tamanho fixo para cada "slot"
+                    lblLetra.Font = new Font("Courier New", 32F, FontStyle.Bold);
+                    lblLetra.TextAlign = ContentAlignment.MiddleCenter;
+                    lblLetra.ForeColor = Theme.Text;
+                    lblLetra.BackColor = Theme.Surface; // Fundo estilo "Card"
+                    lblLetra.Margin = new Padding(5);
+                    
+                    // Arredonda as bordas do label (simples)
+                    // Para fazer isso direito precisaria de um controle customizado, mas vamos usar Paint event
+                    lblLetra.Paint += (s, e) =>
+                    {
+                        // Desenha borda arredondada
+                        e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                        using (Pen p = new Pen(Theme.Primary, 2))
+                        {
+                            Rectangle r = new Rectangle(1, 1, lblLetra.Width - 2, lblLetra.Height - 2);
+                            // e.Graphics.DrawRectangle(p, r); // Borda simples
+                        }
+                    };
+                    
+                    flowPalavraSecreta.Controls.Add(lblLetra);
+                }
+                
+                // Centraliza o FlowLayoutPanel após adicionar os controles
+                // Pequeno delay para garantir que o layout foi calculado
+                if (this.IsHandleCreated)
+                {
+                    this.BeginInvoke(new Action(() => {
+                         flowPalavraSecreta.Left = (this.ClientSize.Width - flowPalavraSecreta.Width) / 2;
+                    }));
+                }
+                else
+                {
+                    // Se o handle ainda não foi criado, centraliza diretamente
+                    flowPalavraSecreta.Left = (this.ClientSize.Width - flowPalavraSecreta.Width) / 2;
                 }
             }
-            lblPalavraSecreta.Text = displayText.ToString();
+
+            // Atualiza o texto de cada label
+            for (int i = 0; i < jogo.PalavraExibida.Length; i++)
+            {
+                if (flowPalavraSecreta.Controls[i] is Label lbl)
+                {
+                    char letra = jogo.PalavraExibida[i];
+                    // Se for espaço, não mostra nada (ou mostra espaço), se for _, mostra vazio
+                    // Se for letra, mostra a letra
+                    if (letra == '_')
+                    {
+                        lbl.Text = "";
+                    }
+                    else
+                    {
+                        lbl.Text = letra.ToString();
+                    }
+                }
+            }
         }
 
         private void AtualizarInterface()
         {
-            lblTentativas.Text = "Tentativas restantes: " + jogo.TentativasRestantes;
-            lblTempo.Text = "Tempo restante: " + jogo.TempoRestante + "s";
+            lblTentativas.Text = "Tentativas: " + jogo.TentativasRestantes;
+            lblTempo.Text = "Tempo: " + jogo.TempoRestante + "s";
             lblPontuacao.Text = "Pontuação: " + jogo.Pontuacao;
-            lblLetrasErradas.Text = "Letras erradas: " + string.Join(", ", jogo.LetrasErradas);
+            lblLetrasErradas.Text = "Erros: " + string.Join(", ", jogo.LetrasErradas);
+            lblTentativasPalavra.Text = $"Chances Palavra: {jogo.TentativasPalavraCompleta}";
+            
+            // Muda cor do tempo se estiver acabando
+            if (jogo.TempoRestante <= 10) lblTempo.ForeColor = Theme.Error;
+            else lblTempo.ForeColor = Theme.Text;
         }
 
         private void btnAdivinhar_Click(object sender, EventArgs e)
         {
             if (!jogo.JogoEmAndamento || string.IsNullOrEmpty(txtLetra.Text))
             {
-                MessageBox.Show("Por favor, inicie um novo jogo e digite uma letra.");
+                FormMessageBox.Show("Por favor, inicie um novo jogo e digite uma letra.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (!char.IsLetter(txtLetra.Text[0]))
             {
-                MessageBox.Show("Por favor, digite uma letra válida.");
+                FormMessageBox.Show("Por favor, digite uma letra válida.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtLetra.Clear();
                 return;
             }
@@ -142,37 +280,61 @@ namespace GeoMente
             txtLetra.Focus();
         }
 
+        private void btnAdivinharPalavra_Click(object sender, EventArgs e)
+        {
+            if (!jogo.JogoEmAndamento || string.IsNullOrWhiteSpace(txtPalavraCompleta.Text))
+            {
+                FormMessageBox.Show("Por favor, digite uma palavra.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string palavra = txtPalavraCompleta.Text;
+            int tentativasAntes = jogo.TentativasPalavraCompleta;
+            jogo.AdivinharPalavraCompleta(palavra);
+
+            AtualizarPalavraExibida();
+            AtualizarInterface();
+
+            if (!jogo.JogoEmAndamento)
+            {
+                FimDeJogo();
+            }
+            else if (jogo.TentativasPalavraCompleta < tentativasAntes)
+            {
+                FormMessageBox.Show($"Palavra incorreta! Você perdeu uma tentativa de palavra completa. Restam {jogo.TentativasPalavraCompleta}.", "Ops!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPalavraCompleta.Clear();
+                txtPalavraCompleta.Focus();
+            }
+        }
+
         private void FimDeJogo()
         {
             timerJogo.Stop();
             txtLetra.Enabled = false;
             btnAdivinhar.Enabled = false;
-            btnNovoJogo.Visible = false;
-            btnJogarNovamente.Visible = true;
+            txtPalavraCompleta.Enabled = false;
+            btnAdivinharPalavra.Enabled = false;
 
             if (jogo.Vitoria)
             {
                 AtualizarInterface(); // Atualiza a pontuação com o bônus
                 lblMensagemFinal.Text = "Parabéns! Você acertou a palavra! Pontuação final: " + jogo.Pontuacao;
-                lblMensagemFinal.ForeColor = Color.Green;
+                lblMensagemFinal.ForeColor = Theme.Success;
             }
             else
             {
-                lblMensagemFinal.Text = "Fim de jogo! A palavra era: " + jogo.PaisAtual.Nome;
-                lblMensagemFinal.ForeColor = Color.Red;
+                lblMensagemFinal.Text = "Fim de jogo! A palavra era: " + jogo.ItemAtual.Nome;
+                lblMensagemFinal.ForeColor = Theme.Error;
             }
             lblMensagemFinal.Visible = true;
+            lblMensagemFinal.BringToFront();
         }
 
-        private void btnJogarNovamente_Click(object sender, EventArgs e)
-        {
-            IniciarNovoJogo();
-        }
 
         private void btnVoltar_Click(object sender, EventArgs e)
         {
             timerJogo.Stop();
-            this.formEntrada.Show();
+            this.formAnterior.Show();
             this.Close();
         }
 
@@ -211,9 +373,14 @@ namespace GeoMente
             if (imagemBandeiraOriginal != null)
             {
                 e.Graphics.Clear(pictureBoxBandeira.BackColor);
+                e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-                // Proporção da imagem original (1200x720)
-                const float aspectRatio = 1200f / 720f;
+                // Calcula a proporção da imagem dinamicamente para evitar distorções
+                float aspectRatio = 1.0f; // Valor padrão
+                if (imagemBandeiraOriginal.Height > 0)
+                {
+                    aspectRatio = (float)imagemBandeiraOriginal.Width / imagemBandeiraOriginal.Height;
+                }
 
                 // Calcula as dimensões do retângulo de destino mantendo a proporção
                 int larguraDestino = pictureBoxBandeira.Width;
@@ -232,7 +399,7 @@ namespace GeoMente
                 Rectangle destRect = new Rectangle(x, y, larguraDestino, alturaDestino);
 
                 // Cria o caminho (path) da fatia de pizza para usar como clipe
-                using (System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath())
+                using (GraphicsPath path = new GraphicsPath())
                 {
                     path.AddPie(destRect, -90, anguloAtual);
 
@@ -244,6 +411,12 @@ namespace GeoMente
 
                     // Reseta a região de clipe para não afetar outros desenhos
                     e.Graphics.ResetClip();
+                }
+                
+                // Desenha uma borda estilizada ao redor da área da bandeira (opcional)
+                using (Pen p = new Pen(Theme.Surface, 4))
+                {
+                    e.Graphics.DrawRectangle(p, destRect);
                 }
             }
         }
@@ -257,9 +430,9 @@ namespace GeoMente
             }
             pictureBoxBandeira.Image = null; // Limpa a imagem antiga do PictureBox
 
-            if (jogo.PaisAtual.CaminhoImagem == null) return;
+            if (jogo.ItemAtual.CaminhoImagem == null) return;
 
-            string imagePath = Path.Combine(exeDir, jogo.PaisAtual.CaminhoImagem);
+            string imagePath = Path.Combine(exeDir, jogo.ItemAtual.CaminhoImagem);
             if (File.Exists(imagePath))
             {
                 try
@@ -289,24 +462,14 @@ namespace GeoMente
             }
         }
 
-        private void btnVoltar_Click_1(object sender, EventArgs e)
-        {
 
-        }
-
-        private void lblPalavraSecreta_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblMensagemFinal_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnJogarNovamente_Click_1(object sender, EventArgs e)
-        {
-
-        }
     }
 }
+        private void btnDica_Click(object sender, EventArgs e)
+        {
+            if (jogo.ItemAtual.Dica != null)
+            {
+                FormMessageBox.Show(jogo.ItemAtual.Dica, "Dica", MessageBoxButtons.OK, MessageBoxIcon.Info);
+                btnDica.Enabled = false; // Desabilita o botão após o uso
+            }
+        }

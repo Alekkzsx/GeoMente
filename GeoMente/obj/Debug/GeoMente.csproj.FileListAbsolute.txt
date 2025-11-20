@@ -53,3 +53,5 @@ C:\Users\24802449\Documents\GeoMente\GeoMente\bin\Debug\GeoMente.exe
 C:\Users\24802449\Documents\GeoMente\GeoMente\bin\Debug\GeoMente.pdb
 C:\Users\24802449\Documents\GeoMente\GeoMente\obj\Debug\GeoMente.exe
 C:\Users\24802449\Documents\GeoMente\GeoMente\obj\Debug\GeoMente.pdb
+C:\Users\ALEX1\OneDrive\Documentos\GitHub\GeoMente\GeoMente\obj\Debug\GeoMente.FormModoJogo.resources
+C:\Users\ALEX1\OneDrive\Documentos\GitHub\GeoMente\GeoMente\obj\Debug\GeoMente.FormMessageBox.resources

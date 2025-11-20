@@ -7,120 +7,163 @@ namespace GeoMente
 {
     public class RoundedButton : Button
     {
-        private int _borderRadius = 15;
-        private Color _originalBackColor;
-        private Color _hoverBackColor;
+        private int borderSize = 0;
+        private int borderRadius = 20;
+        private Color borderColor = Color.Transparent;
 
-        public Color OriginalBackColor
+        // Properties
+        public int BorderSize
         {
-            get { return _originalBackColor; }
+            get { return borderSize; }
             set
             {
-                _originalBackColor = value;
-                BackColor = value;
-                if (_hoverBackColor == Color.Empty)
-                {
-                    _hoverBackColor = ControlPaint.Light(value, 0.2f);
-                }
+                borderSize = value;
+                this.Invalidate();
             }
-        }
-
-        public Color HoverBackColor
-        {
-            get { return _hoverBackColor; }
-            set { _hoverBackColor = value; }
         }
 
         public int BorderRadius
         {
-            get { return _borderRadius; }
+            get { return borderRadius; }
             set
             {
-                _borderRadius = value;
-                Invalidate();
+                borderRadius = value;
+                this.Invalidate();
             }
         }
 
+        public Color BorderColor
+        {
+            get { return borderColor; }
+            set
+            {
+                borderColor = value;
+                this.Invalidate();
+            }
+        }
+
+        public Color BackgroundColor
+        {
+            get { return this.BackColor; }
+            set { this.BackColor = value; }
+        }
+
+        public Color TextColor
+        {
+            get { return this.ForeColor; }
+            set { this.ForeColor = value; }
+        }
+
+        // Constructor
         public RoundedButton()
         {
             this.FlatStyle = FlatStyle.Flat;
             this.FlatAppearance.BorderSize = 0;
-            // A inicialização de _originalBackColor e _hoverBackColor será feita no primeiro MouseEnter,
-            // garantindo que a cor de fundo definida no designer já tenha sido aplicada.
-
-            this.MouseEnter += OnMouseEnter;
-            this.MouseLeave += OnMouseLeave;
+            this.Size = new Size(150, 40);
+            this.BackColor = Theme.Primary;
+            this.ForeColor = Theme.Text;
+            this.Resize += new EventHandler(Button_Resize);
+            this.Cursor = Cursors.Hand;
+            this.Font = Theme.GetButtonFont();
         }
 
-        private void OnMouseEnter(object sender, EventArgs e)
+        // Methods
+        private void Button_Resize(object sender, EventArgs e)
         {
-            // Se _originalBackColor ainda não foi definido (primeira vez que o mouse entra),
-            // captura a cor de fundo atual (definida pelo designer) e calcula a cor de hover.
-            if (_originalBackColor == Color.Empty)
-            {
-                _originalBackColor = this.BackColor;
-                _hoverBackColor = ControlPaint.Light(this.BackColor, 0.2f);
-            }
-            this.BackColor = _hoverBackColor;
-            Invalidate();
+            if (borderRadius > this.Height)
+                borderRadius = this.Height;
         }
 
-        private void OnMouseLeave(object sender, EventArgs e)
+        private GraphicsPath GetFigurePath(RectangleF rect, float radius)
         {
-            this.BackColor = _originalBackColor;
-            Invalidate();
+            GraphicsPath path = new GraphicsPath();
+            path.StartFigure();
+            path.AddArc(rect.X, rect.Y, radius, radius, 180, 90);
+            path.AddArc(rect.Width - radius, rect.Y, radius, radius, 270, 90);
+            path.AddArc(rect.Width - radius, rect.Height - radius, radius, radius, 0, 90);
+            path.AddArc(rect.X, rect.Height - radius, radius, radius, 90, 90);
+            path.CloseFigure();
+            return path;
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
-            // Do NOT call base.OnPaint(pevent). We are taking over the drawing.
-            
-            // Get the graphics path for the rounded rectangle
-            GraphicsPath grPath = GetRoundedPath(this.ClientRectangle, _borderRadius);
-
+            base.OnPaint(pevent);
             pevent.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-            // Use the current BackColor (which might be the hover color)
-            using (SolidBrush brush = new SolidBrush(this.BackColor))
+            RectangleF rectSurface = new RectangleF(0, 0, this.Width, this.Height);
+            RectangleF rectBorder = new RectangleF(1, 1, this.Width - 0.8f, this.Height - 1);
+
+            if (borderRadius > 2) // Rounded button
             {
-                // Fill ONLY the path, not the entire rectangle
-                pevent.Graphics.FillPath(brush, grPath);
+                using (GraphicsPath pathSurface = GetFigurePath(rectSurface, borderRadius))
+                using (GraphicsPath pathBorder = GetFigurePath(rectBorder, borderRadius - 1f))
+                using (Pen penSurface = new Pen(this.Parent.BackColor, 2))
+                using (Pen penBorder = new Pen(borderColor, borderSize))
+                {
+                    penBorder.Alignment = PenAlignment.Inset;
+                    // Button surface
+                    this.Region = new Region(pathSurface);
+                    // Draw surface border for HD result
+                    pevent.Graphics.DrawPath(penSurface, pathSurface);
+
+                    // Button border
+                    if (borderSize >= 1)
+                        pevent.Graphics.DrawPath(penBorder, pathBorder);
+                }
             }
-
-            // Draw the text in the center
-            TextRenderer.DrawText(pevent.Graphics, this.Text, this.Font, this.ClientRectangle, this.ForeColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
-        }
-
-        protected override void OnResize(EventArgs e)
-        {
-            base.OnResize(e);
-            // When the button is resized, update its region to the new rounded shape
-            this.Region = new Region(GetRoundedPath(this.ClientRectangle, _borderRadius));
-        }
-
-        private GraphicsPath GetRoundedPath(Rectangle rect, int radius)
-        {
-            // Ensure the radius doesn't exceed half the button's smaller dimension
-            int effectiveRadius = Math.Min(radius, Math.Min(rect.Width, rect.Height) / 2);
-            
-            GraphicsPath grPath = new GraphicsPath();
-
-            if (effectiveRadius > 0)
+            else // Normal button
             {
-                // Create the rounded rectangle path
-                grPath.AddArc(rect.X, rect.Y, effectiveRadius * 2, effectiveRadius * 2, 180, 90);
-                grPath.AddArc(rect.Right - (effectiveRadius * 2), rect.Y, effectiveRadius * 2, effectiveRadius * 2, 270, 90);
-                grPath.AddArc(rect.Right - (effectiveRadius * 2), rect.Bottom - (effectiveRadius * 2), effectiveRadius * 2, effectiveRadius * 2, 0, 90);
-                grPath.AddArc(rect.X, rect.Bottom - (effectiveRadius * 2), effectiveRadius * 2, effectiveRadius * 2, 90, 90);
-                grPath.CloseAllFigures();
+                this.Region = new Region(rectSurface);
+                if (borderSize >= 1)
+                {
+                    using (Pen penBorder = new Pen(borderColor, borderSize))
+                    {
+                        penBorder.Alignment = PenAlignment.Inset;
+                        pevent.Graphics.DrawRectangle(penBorder, 0, 0, this.Width - 1, this.Height - 1);
+                    }
+                }
+            }
+        }
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+            this.Parent.BackColorChanged += new EventHandler(Container_BackColorChanged);
+        }
+
+        private void Container_BackColorChanged(object sender, EventArgs e)
+        {
+            if (this.DesignMode)
+                this.Invalidate();
+        }
+        
+        public Color HoverBackColor { get; set; } = Color.Empty;
+        public Color OriginalBackColor { get; set; } = Color.Empty;
+
+        // Hover effects
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            base.OnMouseEnter(e);
+            if (OriginalBackColor == Color.Empty) OriginalBackColor = this.BackColor;
+            
+            if (HoverBackColor != Color.Empty)
+                this.BackColor = HoverBackColor;
+            else
+                this.BackColor = ControlPaint.Light(this.BackColor, 0.1f);
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+            if (OriginalBackColor != Color.Empty)
+            {
+                this.BackColor = OriginalBackColor;
             }
             else
             {
-                // If radius is 0, just add a rectangle
-                grPath.AddRectangle(rect);
+                 this.BackColor = ControlPaint.Dark(this.BackColor, 0.09f); 
             }
-
-            return grPath;
         }
     }
 }
