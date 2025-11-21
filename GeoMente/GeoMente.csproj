@@ -64,6 +64,12 @@
     <Compile Include="FormModoJogo.Designer.cs">
       <DependentUpon>FormModoJogo.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMessageBox.Designer.cs">
+      <DependentUpon>FormMessageBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -117,29 +123,24 @@
     <None Include="Resources\GeoMente-logo.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\bandeiras-paises\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\bandeiras-capitais\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\bandeiras-curiosidades\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="bin\Debug\paises.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="bin\Debug\bandeiras\alemanha.png">
+    <Content Include="bin\Debug\capitais.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="bin\Debug\bandeiras\argentina.png">
+    <Content Include="bin\Debug\curiosidades.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="bin\Debug\bandeiras\brasil.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="bin\Debug\bandeiras\eua.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="bin\Debug\bandeiras\japao.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="bin\Debug\bandeiras\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-   </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

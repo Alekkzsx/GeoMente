@@ -67,21 +67,21 @@ namespace GeoMente
             EstilizarLabel(lblTempo, Theme.Text);
             EstilizarLabel(lblPontuacao, Theme.Text);
             EstilizarLabel(lblLetrasErradas, Theme.Error);
-            EstilizarLabel(lblTentativasPalavra, Theme.Warning);
+            EstilizarLabel(lblTentativasPalavra, Theme.TextSecondary);
             
             // Estiliza Botões
-            EstilizarBotao(btnAdivinhar, Theme.Primary);
-            EstilizarBotao(btnAdivinharPalavra, Theme.Secondary);
-            EstilizarBotao(btnNovoJogo, Theme.Success);
-            EstilizarBotao(btnVoltar, Theme.Surface);
-            EstilizarBotao(btnDica, Theme.Info);
+            EstilizarBotao(btnAdivinhar, Theme.Primary, Color.White);
+            EstilizarBotao(btnAdivinharPalavra, Theme.Warning, Color.White);
+            EstilizarBotao(btnNovoJogo, Theme.Success, Color.White);
+            EstilizarBotao(btnVoltar, Theme.TextSecondary, Color.White);
+            EstilizarBotao(btnDica, Theme.Info, Color.White);
 
-            // Estiliza Panels
-            panelAdivinhar.BackColor = Color.Transparent;
-            panelAdivinharPalavra.BackColor = Color.Transparent;
+            // Estiliza Panels com fundo sutil
+            panelAdivinhar.BackColor = Theme.Surface;
+            panelAdivinharPalavra.BackColor = ColorTranslator.FromHtml("#FEF3C7"); // Amarelo muito claro
             
             // Ajusta PictureBox
-            pictureBoxBandeira.BackColor = Color.Transparent;
+            pictureBoxBandeira.BackColor = Theme.Surface;
         }
 
         private void EstilizarLabel(Label lbl, Color color)
@@ -90,18 +90,19 @@ namespace GeoMente
             lbl.Font = Theme.GetTextFont(12);
         }
 
-        private void EstilizarBotao(Button btn, Color corFundo)
+        private void EstilizarBotao(Button btn, Color corFundo, Color corTexto)
         {
             if (btn is RoundedButton rb)
             {
                 rb.BackColor = corFundo;
-                rb.ForeColor = Theme.Text;
+                rb.ForeColor = corTexto;
                 rb.BorderRadius = 15;
+                rb.Font = Theme.GetButtonFont(12);
             }
             else
             {
                 btn.BackColor = corFundo;
-                btn.ForeColor = Theme.Text;
+                btn.ForeColor = corTexto;
                 btn.FlatStyle = FlatStyle.Flat;
                 btn.FlatAppearance.BorderSize = 0;
             }
@@ -462,14 +463,14 @@ namespace GeoMente
             }
         }
 
-
-    }
-}
         private void btnDica_Click(object sender, EventArgs e)
         {
             if (jogo.ItemAtual.Dica != null)
             {
-                FormMessageBox.Show(jogo.ItemAtual.Dica, "Dica", MessageBoxButtons.OK, MessageBoxIcon.Info);
+                FormMessageBox.Show(jogo.ItemAtual.Dica, "Dica", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 btnDica.Enabled = false; // Desabilita o botão após o uso
             }
         }
+
+    }
+}

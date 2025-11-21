@@ -4,18 +4,32 @@ namespace GeoMente
 {
     public static class Theme
     {
-        // Color Palette
-        public static readonly Color Primary = ColorTranslator.FromHtml("#6C63FF"); // Vibrant Purple
-        public static readonly Color Secondary = ColorTranslator.FromHtml("#FF6584"); // Soft Red/Pink
-        public static readonly Color Background = ColorTranslator.FromHtml("#2A2E37"); // Dark Grey/Blue
-        public static readonly Color Surface = ColorTranslator.FromHtml("#3D4250"); // Lighter Grey for cards/panels
-        public static readonly Color Text = ColorTranslator.FromHtml("#FFFFFF"); // White
-        public static readonly Color TextSecondary = ColorTranslator.FromHtml("#A0A0A0"); // Grey
-        public static readonly Color Success = ColorTranslator.FromHtml("#00C851"); // Green
-        public static readonly Color Error = ColorTranslator.FromHtml("#FF4444"); // Red
-        public static readonly Color Warning = ColorTranslator.FromHtml("#FFBB33"); // Orange
+        // Backgrounds
+        public static readonly Color Background = Color.White; // #FFFFFF - Branco puro
+        public static readonly Color Surface = ColorTranslator.FromHtml("#F8F9FA"); // Cinza muito claro para cards/painéis
+        public static readonly Color SurfaceVariant = ColorTranslator.FromHtml("#E9ECEF"); // Cinza claro para elementos secundários
 
-        // Fonts (using system fonts for simplicity, but styled)
+        // Textos
+        public static readonly Color Text = ColorTranslator.FromHtml("#212529"); // Cinza muito escuro, quase preto
+        public static readonly Color TextSecondary = ColorTranslator.FromHtml("#6C757D"); // Cinza médio
+        public static readonly Color TextMuted = ColorTranslator.FromHtml("#ADB5BD"); // Cinza claro
+
+        // Cores de Ação
+        public static readonly Color Primary = ColorTranslator.FromHtml("#4F46E5"); // Índigo moderno
+        public static readonly Color PrimaryHover = ColorTranslator.FromHtml("#4338CA"); // Índigo escuro
+        public static readonly Color Secondary = ColorTranslator.FromHtml("#EC4899"); // Rosa vibrante
+        public static readonly Color SecondaryHover = ColorTranslator.FromHtml("#DB2777"); // Rosa escuro
+
+        // Status
+        public static readonly Color Success = ColorTranslator.FromHtml("#10B981"); // Verde moderno
+        public static readonly Color Error = ColorTranslator.FromHtml("#EF4444"); // Vermelho moderno
+        public static readonly Color Warning = ColorTranslator.FromHtml("#F59E0B"); // Laranja/amarelo
+        public static readonly Color Info = ColorTranslator.FromHtml("#3B82F6"); // Azul moderno
+
+        // Bordas e Sombras
+        public static readonly Color Border = ColorTranslator.FromHtml("#DEE2E6"); // Cinza claro para bordas
+
+        // Fonts (usando Segoe UI para aparência moderna)
         public static Font GetTitleFont(float size = 24) => new Font("Segoe UI", size, FontStyle.Bold);
         public static Font GetTextFont(float size = 12) => new Font("Segoe UI", size, FontStyle.Regular);
         public static Font GetButtonFont(float size = 14) => new Font("Segoe UI", size, FontStyle.Bold);

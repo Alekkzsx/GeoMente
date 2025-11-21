@@ -24,43 +24,43 @@ namespace GeoMente
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "GeoMente - Seleção de Modo";
 
-            // Estiliza botões de modo
-            EstilizarBotao(btnPaises, Theme.Primary);
-            EstilizarBotao(btnCapitais, Theme.Surface);
-            EstilizarBotao(btnCuriosidades, Theme.Surface);
+            // Estiliza botões de modo com cores vibrantes
+            EstilizarBotao(btnPaises, Theme.Primary, Color.White);
+            EstilizarBotao(btnCapitais, Theme.Info, Color.White);
+            EstilizarBotao(btnCuriosidades, Theme.Secondary, Color.White);
 
-            // Desabilita os modos de jogo indisponíveis
+            // Todos os modos estão disponíveis
             btnCapitais.Enabled = true;
             btnCuriosidades.Enabled = true;
 
             // Estiliza botões de dificuldade
-            EstilizarBotao(btnFacil, Theme.Success);
-            EstilizarBotao(btnMedio, Theme.Warning);
-            EstilizarBotao(btnDificil, Theme.Error);
-            EstilizarBotao(btnHardcore, Color.Purple);
+            EstilizarBotao(btnFacil, Theme.Success, Color.White);
+            EstilizarBotao(btnMedio, Theme.Warning, Color.White);
+            EstilizarBotao(btnDificil, Theme.Error, Color.White);
+            EstilizarBotao(btnHardcore, ColorTranslator.FromHtml("#7C3AED"), Color.White); // Roxo moderno
 
             // Estiliza botões de voltar
-            EstilizarBotao(btnVoltarModos, Theme.Secondary);
-            EstilizarBotao(btnVoltarDificuldade, Theme.Secondary);
+            EstilizarBotao(btnVoltarModos, Theme.TextSecondary, Color.White);
+            EstilizarBotao(btnVoltarDificuldade, Theme.TextSecondary, Color.White);
 
             // Ajusta visibilidade inicial
             panelDificuldade.BackColor = Color.Transparent;
         }
 
-        private void EstilizarBotao(Button btn, Color corFundo)
+        private void EstilizarBotao(Button btn, Color corFundo, Color corTexto)
         {
             if (btn is RoundedButton rb)
             {
                 rb.BackColor = corFundo;
-                rb.ForeColor = Theme.Text;
+                rb.ForeColor = corTexto;
                 rb.BorderRadius = 20;
-                rb.Font = Theme.GetButtonFont(12);
-                rb.Size = new Size(180, 60); // Botões maiores
+                rb.Font = Theme.GetButtonFont(14); // Fonte maior para melhor legibilidade
+                rb.Size = new Size(200, 65); // Botões maiores e mais clicáveis
             }
             else
             {
                 btn.BackColor = corFundo;
-                btn.ForeColor = Theme.Text;
+                btn.ForeColor = corTexto;
                 btn.FlatStyle = FlatStyle.Flat;
                 btn.FlatAppearance.BorderSize = 0;
             }
@@ -95,6 +95,9 @@ namespace GeoMente
         {
             modoSelecionado = modo;
 
+            // Atualiza o título para a tela de dificuldade
+            lblTitulo.Text = "Escolha a Dificuldade (tome cuidado!)";
+
             // Esconde os botões não selecionados
             btnPaises.Visible = modo == "Países";
             btnCapitais.Visible = modo == "Capitais";
@@ -108,15 +111,39 @@ namespace GeoMente
 
             if (btnSelecionado != null)
             {
-                // Animação simples (reposicionamento)
+                // Posiciona o botão selecionado no topo
                 btnSelecionado.Left = (this.ClientSize.Width - btnSelecionado.Width) / 2;
-                btnSelecionado.Top = 100; // Mais para cima
+                btnSelecionado.Top = 80; // Espaço do topo
             }
 
-            // Mostra os botões de dificuldade
+            // Organiza os botões de dificuldade em grid 2x2 DENTRO DO PAINEL
+            int buttonSpacing = 20;
+            
+            // Primeira linha: Fácil e Médio
+            btnFacil.Left = 10;
+            btnFacil.Top = 10;
+            
+            btnMedio.Left = btnFacil.Right + buttonSpacing;
+            btnMedio.Top = 10;
+            
+            // Segunda linha: Difícil e Hardcore
+            btnDificil.Left = 10;
+            btnDificil.Top = btnFacil.Bottom + buttonSpacing;
+            
+            btnHardcore.Left = btnDificil.Right + buttonSpacing;
+            btnHardcore.Top = btnDificil.Top;
+
+            // Ajusta o tamanho do painel para caber os botões
+            int panelWidth = (btnFacil.Width * 2) + buttonSpacing + 20; // 20 = margens
+            int panelHeight = (btnFacil.Height * 2) + buttonSpacing + 20;
+            panelDificuldade.Size = new Size(panelWidth, panelHeight);
+
+            // Posiciona o painel centralizado abaixo do botão de modo
+            panelDificuldade.Left = (this.ClientSize.Width - panelWidth) / 2;
+            panelDificuldade.Top = btnSelecionado.Bottom + 80; // Mais espaço após o botão de modo
+
+            // Mostra o painel de dificuldade
             panelDificuldade.Visible = true;
-            panelDificuldade.Left = (this.ClientSize.Width - panelDificuldade.Width) / 2;
-            panelDificuldade.Top = btnSelecionado.Bottom + 30;
 
             // Esconde o botão voltar dos modos
             btnVoltarModos.Visible = false;
@@ -124,7 +151,7 @@ namespace GeoMente
             // Mostra o botão voltar da dificuldade
             btnVoltarDificuldade.Visible = true;
             btnVoltarDificuldade.Left = (this.ClientSize.Width - btnVoltarDificuldade.Width) / 2;
-            btnVoltarDificuldade.Top = panelDificuldade.Bottom + 20;
+            btnVoltarDificuldade.Top = panelDificuldade.Bottom + 50; // Mais espaço
         }
 
         private void btnFacil_Click(object sender, EventArgs e)
@@ -164,6 +191,10 @@ namespace GeoMente
         {
             // Volta para a seleção de modos
             modoSelecionado = null;
+            
+            // Restaura o título para a tela de modos
+            lblTitulo.Text = "Escolha o Modo de Jogo";
+            
             btnPaises.Visible = true;
             btnCapitais.Visible = true;
             btnCuriosidades.Visible = true;
@@ -178,11 +209,11 @@ namespace GeoMente
         private void CentralizarBotoesModo()
         {
             int buttonWidth = btnPaises.Width;
-            int spacing = 20;
+            int spacing = 24; // Espaçamento aumentado
             int totalWidth = (buttonWidth * 3) + (spacing * 2);
             
             int startX = (this.ClientSize.Width - totalWidth) / 2;
-            int centerY = (this.ClientSize.Height - btnPaises.Height) / 2;
+            int centerY = (this.ClientSize.Height - btnPaises.Height) / 2 - 40; // Mais para cima
 
             btnPaises.Left = startX;
             btnPaises.Top = centerY;
@@ -193,9 +224,9 @@ namespace GeoMente
             btnCuriosidades.Left = btnCapitais.Right + spacing;
             btnCuriosidades.Top = centerY;
 
-            // Botão voltar
+            // Botão voltar com mais espaço
             btnVoltarModos.Left = (this.ClientSize.Width - btnVoltarModos.Width) / 2;
-            btnVoltarModos.Top = btnPaises.Bottom + 40;
+            btnVoltarModos.Top = btnPaises.Bottom + 60; // Mais espaço
         }
 
         private void FormModoJogo_Resize(object sender, EventArgs e)

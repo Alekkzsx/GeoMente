@@ -58,13 +58,14 @@ namespace GeoMente
             if (btn is RoundedButton rb)
             {
                 rb.BackColor = corFundo;
-                rb.ForeColor = Theme.Text;
+                rb.ForeColor = Color.White; // Texto branco nos botões coloridos
                 rb.BorderRadius = 25;
+                rb.Font = Theme.GetButtonFont(16); // Fonte maior para melhor legibilidade
             }
             else
             {
                 btn.BackColor = corFundo;
-                btn.ForeColor = Theme.Text;
+                btn.ForeColor = Color.White;
                 btn.FlatStyle = FlatStyle.Flat;
                 btn.FlatAppearance.BorderSize = 0;
             }

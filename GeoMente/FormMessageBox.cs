@@ -69,9 +69,9 @@ namespace GeoMente
                 Text = text,
                 DialogResult = result,
                 BackColor = color,
-                ForeColor = Theme.Text,
-                Font = Theme.GetButtonFont(10),
-                Size = new Size(100, 40),
+                ForeColor = Color.White, // Texto branco nos botões coloridos
+                Font = Theme.GetButtonFont(11),
+                Size = new Size(110, 45),
                 BorderRadius = 15
             };
             btn.Click += (sender, e) => { this.Close(); };

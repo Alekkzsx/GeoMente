@@ -18,7 +18,8 @@ namespace GeoMente
                 return cacheItens[modoJogo];
             }
 
-            string nomeArquivo = $"{modoJogo.ToLower()}.txt";
+            // Normaliza o nome do modo: remove acentos e converte para minúsculas
+            string nomeArquivo = $"{Utils.RemoverAcentos(modoJogo.ToLower())}.txt";
             string caminhoArquivo = Path.Combine(exeDir, nomeArquivo);
 
             if (!File.Exists(caminhoArquivo))

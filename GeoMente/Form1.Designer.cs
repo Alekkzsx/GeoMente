@@ -47,6 +47,7 @@
             this.txtPalavraCompleta = new System.Windows.Forms.TextBox();
             this.btnAdivinharPalavra = new GeoMente.RoundedButton();
             this.lblTentativasPalavra = new System.Windows.Forms.Label();
+            this.btnDica = new GeoMente.RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBandeira)).BeginInit();
             this.panelAdivinhar.SuspendLayout();
             this.panelAdivinharPalavra.SuspendLayout();

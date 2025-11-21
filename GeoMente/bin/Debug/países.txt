@@ -9,7 +9,7 @@ BOLIVIA;bandeiras-paises/bolivia.png;2
 BRASIL;bandeiras-paises/brasil.png;1
 BRUNEI;bandeiras-paises/brunei.png;4
 CANADA;bandeiras-paises/canada.png;1
-CAZAQUISTAO;bandeiras-paises/cazaquistão.png;3
+CAZAQUISTAO;bandeiras-paises/cazaquistao.png;3
 CHADE;bandeiras-paises/chade.png;3
 CHILE;bandeiras-paises/chile.png;2
 CHINA;bandeiras-paises/china.png;1

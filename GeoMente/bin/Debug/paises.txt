@@ -1,0 +1,73 @@
+ALEMANHA;bandeiras-paises/alemanha.png;2
+ANGOLA;bandeiras-paises/angola.png;3
+ARGENTINA;bandeiras-paises/argentina.png;1
+ARMENIA;bandeiras-paises/armenia.png;3
+AUSTRALIA;bandeiras-paises/australia.png;2
+BELGICA;bandeiras-paises/belgica.png;2
+BIELORUSSIA;bandeiras-paises/bielorussia.png;3
+BOLIVIA;bandeiras-paises/bolivia.png;2
+BRASIL;bandeiras-paises/brasil.png;1
+BRUNEI;bandeiras-paises/brunei.png;4
+CANADA;bandeiras-paises/canada.png;1
+CAZAQUISTAO;bandeiras-paises/cazaquistão.png;3
+CHADE;bandeiras-paises/chade.png;3
+CHILE;bandeiras-paises/chile.png;2
+CHINA;bandeiras-paises/china.png;1
+COLOMBIA;bandeiras-paises/colombia.png;2
+COREIA DO NORTE;bandeiras-paises/coreia_norte.png;2
+COREIA DO SUL;bandeiras-paises/coreia_sul.png;2
+COSTA DO MARFIM;bandeiras-paises/costa_de_marfim.png;3
+CUBA;bandeiras-paises/cuba.png;2
+CURACAO;bandeiras-paises/curacao.png;4
+DINAMARCA;bandeiras-paises/dinamarca.png;2
+EGITO;bandeiras-paises/egito.png;2
+EL SALVADOR;bandeiras-paises/el_salvador.png;3
+EQUADOR;bandeiras-paises/equador.png;2
+ESCOCIA;bandeiras-paises/escocia.png;2
+ESPANHA;bandeiras-paises/espanha.png;1
+ESTADOS UNIDOS;bandeiras-paises/eua.png;1
+FINLANDIA;bandeiras-paises/finlandia.png;2
+FRANCA;bandeiras-paises/franca.png;1
+GANA;bandeiras-paises/gana.png;3
+HOLANDA;bandeiras-paises/holanda.png;1
+INDIA;bandeiras-paises/india.png;1
+INDONESIA;bandeiras-paises/indonesia.png;2
+INGLATERRA;bandeiras-paises/inglaterra.png;1
+IRA;bandeiras-paises/iran.png;2
+IRLANDA;bandeiras-paises/irlanda.png;2
+ISLANDIA;bandeiras-paises/islandia.png;2
+ITALIA;bandeiras-paises/italia.png;1
+JAPAO;bandeiras-paises/japao.png;1
+KOSOVO;bandeiras-paises/kosovo.png;4
+MACAU;bandeiras-paises/macau.png;4
+MACEDONIA;bandeiras-paises/macedonia.png;3
+MARROCOS;bandeiras-paises/marrocos.png;2
+MOLDAVIA;bandeiras-paises/moldavia.png;3
+MONACO;bandeiras-paises/monaco.png;3
+MONGOLIA;bandeiras-paises/mongolia.png;3
+NIGER;bandeiras-paises/niger.png;3
+NORUEGA;bandeiras-paises/noruega.png;2
+NOVA ZELANDIA;bandeiras-paises/nova_zelandia.png;2
+PAIS DE GALES;bandeiras-paises/pais_de_gales.png;3
+PAPUA NOVA GUINE;bandeiras-paises/papua_nova_guine.png;4
+PAQUISTAO;bandeiras-paises/paquistao.png;2
+PARAGUAI;bandeiras-paises/paraguai.png;2
+PERU;bandeiras-paises/peru.png;2
+POLONIA;bandeiras-paises/polonia.png;2
+PORTO RICO;bandeiras-paises/porto_rico.png;3
+PORTUGAL;bandeiras-paises/portugal.png;1
+ROMENIA;bandeiras-paises/romenia.png;2
+RUSSIA;bandeiras-paises/russia.png;1
+SERVIA;bandeiras-paises/servia.png;3
+SINGAPURA;bandeiras-paises/singapura.png;2
+SUAZILANDIA;bandeiras-paises/suazilandia.png;4
+SUECIA;bandeiras-paises/suecia.png;2
+SUICA;bandeiras-paises/suica.png;2
+SURINAME;bandeiras-paises/suriname.png;4
+TAILANDIA;bandeiras-paises/thailandia.png;2
+TUNISIA;bandeiras-paises/tunisia.png;3
+TURQUIA;bandeiras-paises/turquia.png;2
+UCRANIA;bandeiras-paises/ucrania.png;2
+URUGUAI;bandeiras-paises/uruguai.png;2
+VENEZUELA;bandeiras-paises/venezuela.png;2
+VIETNA;bandeiras-paises/vietnam.png;2
